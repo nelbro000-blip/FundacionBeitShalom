@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flask: Fundación Beit Shalom",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "app.py",
+                "FLASK_DEBUG": "1"
+            },
+            "args": ["run", "--no-debugger", "--no-reload"],
+            "jinja": true,
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Pytest: todas las pruebas",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["-v"],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
