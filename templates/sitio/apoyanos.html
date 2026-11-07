@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina, titulo_seccion, llamado_colaborar with context %}
+
+{% block titulo %}Formas de apoyar{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Formas de apoyar", [("Apóyanos", url_for('sitio.apoyanos'))]) }}
+
+<section class="pricing-one">
+    <div class="container">
+        {{ titulo_seccion("Formas de apoyar", "Elige cómo quieres ayudar") }}
+        <div class="row gutter-y-30">
+            {% for forma in formas %}
+            <div class="col-md-12 col-lg-4 wow fadeInUp" data-wow-delay="{{ loop.index * 100 }}ms">
+                <div class="pricing-one__card" style="--accent-color: {{ forma.color }};">
+                    <h3 class="pricing-one__card__tagline">{{ forma.titulo }}</h3>
+                    <p class="pricing-one__card__month">{{ forma.periodo }}</p>
+                    <div class="pricing-one__card__icon">
+                        <i class="{{ forma.icono }}"></i>
+                    </div>
+                    <ul class="list-unstyled pricing-one__card__list">
+                        {% for beneficio in forma.beneficios %}
+                        <li><i class="fa fa-check-circle"></i> {{ beneficio }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="pricing-one__card__price">{{ forma.precio }}</p>
+                    {% if forma.asunto %}
+                    {% set destino = url_for(forma.destino, asunto=forma.asunto) ~ '#formulario-contacto' %}
+                    {% else %}
+                    {% set destino = url_for(forma.destino) %}
+                    {% endif %}
+                    <a href="{{ destino }}" class="kidearn-btn pricing-one__boton"><span>{{ forma.boton }}</span></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <p class="nota-apoyo">
+            Para donaciones escríbenos desde la página de contacto: te enviaremos la información
+            para realizar tu aporte de forma segura. No solicitamos datos bancarios por este sitio.
+        </p>
+    </div>
+</section>
+
+{{ llamado_colaborar() }}
+
+{% endblock %}

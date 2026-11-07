@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import estatico, encabezado_pagina with context %}
+
+{% block titulo %}Galería{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Galería", [("Equipo y eventos", url_for('sitio.equipo'))]) }}
+
+<section class="gallery-one gallery-one--page">
+    <div class="container">
+        <div class="row">
+            {% for foto in imagenes %}
+            <div class="col-md-6 col-lg-4">
+                <div class="gallery-one__card">
+                    <img src="{{ estatico(foto.imagen) }}" alt="{{ foto.descripcion }}">
+                    <div class="gallery-one__card__hover">
+                        <a href="{{ estatico(foto.imagen) }}" class="img-popup" title="{{ foto.descripcion }}" aria-label="Ampliar: {{ foto.descripcion }}">
+                            <span class="gallery-one__card__icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "admin/base_admin.html" %}
+
+{% block titulo %}Mensajes de contacto{% endblock %}
+
+{% block contenido_admin %}
+
+<div class="encabezado-pagina">
+    <div>
+        <h1>Mensajes de contacto</h1>
+        <p class="subtitulo">
+            {{ mensajes | length }} {{ "mensaje" if mensajes | length == 1 else "mensajes" }}
+            {{ "sin leer" if solo_no_leidos else "recibidos desde la página de contacto" }}.
+        </p>
+    </div>
+    <div class="acciones">
+        {% if solo_no_leidos %}
+        <a class="boton boton-secundario" href="{{ url_for('admin.mensajes') }}">Ver todos</a>
+        {% else %}
+        <a class="boton boton-secundario" href="{{ url_for('admin.mensajes', filtro='no-leidos') }}">Solo sin leer</a>
+        {% endif %}
+    </div>
+</div>
+
+{% if mensajes %}
+<div class="tarjeta tabla-contenedor">
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th scope="col">Remitente</th>
+                <th scope="col">Asunto</th>
+                <th scope="col">Mensaje</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mensaje in mensajes %}
+            <tr class="{{ 'fila-no-leida' if not mensaje.leido }}">
+                <td>
+                    <a class="enlace-nombre" href="{{ url_for('admin.mensaje', id_mensaje=mensaje.id) }}">{{ mensaje.nombre }}</a>
+                    <br><span class="texto-suave">{{ mensaje.correo }}</span>
+                </td>
+                <td>{{ mensaje.asunto_texto }}</td>
+                <td class="celda-areas">{{ mensaje.mensaje | truncate(90) }}</td>
+                <td class="numero-celda">{{ mensaje.fecha | fecha }}</td>
+                <td>
+                    {% if mensaje.leido %}
+                    <span class="estado"><span class="estado-punto" aria-hidden="true"></span>Leído</span>
+                    {% else %}
+                    <span class="estado estado-revision"><span class="estado-punto" aria-hidden="true"></span>Nuevo</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="tarjeta vacio">
+    {{ "No hay mensajes sin leer." if solo_no_leidos else "Aún no se han recibido mensajes." }}
+</div>
+{% endif %}
+
+{% endblock %}

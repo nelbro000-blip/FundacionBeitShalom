@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import estatico, encabezado_pagina with context %}
+
+{% block titulo %}{{ titulo }}{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Error " ~ codigo) }}
+
+<section class="error-404 pagina-error">
+    <div class="container">
+        <div class="error-404__thumb">
+            <img src="{{ estatico('assets/images/resources/error-page-1.png') }}" alt="" class="error-404__thumb__one">
+            <img src="{{ estatico('assets/images/resources/error-page-2.png') }}" alt="" class="error-404__thumb__two">
+            <img src="{{ estatico('assets/images/resources/error-page-3.png') }}" alt="" class="error-404__thumb__bg">
+        </div>
+        <p class="codigo-error">Error {{ codigo }}</p>
+        <h2 class="error-404__sub-title">{{ titulo }}</h2>
+        <p class="error-404__text">{{ mensaje }}</p>
+        <div class="error-404__btns">
+            <a href="{{ url_for('sitio.inicio') }}" class="kidearn-btn kidearn-btn--xl error-404__btn"><span>Volver al inicio</span></a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

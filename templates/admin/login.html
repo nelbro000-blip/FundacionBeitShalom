@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina with context %}
+
+{% block titulo %}Acceso del personal{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Acceso del personal") }}
+
+<section class="login-page">
+    <div class="container">
+        <div class="login-page__wrap">
+            <div class="row gutter-y-30">
+                <div class="col-lg-6 wow fadeInUp animated" data-wow-delay="300ms">
+                    <h2 class="login-page__wrap__title">Iniciar sesión</h2>
+
+                    {% include "parciales/mensajes.html" %}
+
+                    <form class="login-page__form form-login" method="POST" action="{{ url_for('admin.login', siguiente=siguiente) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="login-page__form-input-box">
+                            <label class="sr-only" for="usuario">Usuario</label>
+                            <input type="text" id="usuario" name="usuario" placeholder="Usuario *" required maxlength="50"
+                                   autocomplete="username" autocapitalize="none" spellcheck="false" value="{{ nombre_usuario }}" autofocus>
+                        </div>
+                        <div class="login-page__form-input-box">
+                            <label class="sr-only" for="password">Contraseña</label>
+                            <input type="password" id="password" name="password" placeholder="Contraseña *" required autocomplete="current-password">
+                        </div>
+                        <div class="login-page__form-btn-box">
+                            <button type="submit" class="kidearn-btn kidearn-btn--xl"><span>Iniciar sesión</span></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6 wow fadeInUp animated" data-wow-delay="400ms">
+                    <div class="login-info-panel">
+                        <h2 class="login-page__wrap__title">Panel administrativo</h2>
+                        <p>
+                            Este acceso es exclusivo para el personal autorizado de la fundación.
+                            Desde el panel se consultan y evalúan las solicitudes de los colaboradores
+                            y los mensajes de contacto.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-check-circle"></i> Las contraseñas se guardan cifradas (hash).</li>
+                            <li><i class="fa fa-check-circle"></i> La sesión se cierra sola tras 30 minutos.</li>
+                            <li><i class="fa fa-check-circle"></i> Tras 5 intentos fallidos el acceso se bloquea 15 minutos.</li>
+                        </ul>
+                        <p>¿Quieres ayudar a la fundación?</p>
+                        <a href="{{ url_for('colaborador.registrar') }}" class="kidearn-btn boton-secundario-sitio"><span>Quiero colaborar</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

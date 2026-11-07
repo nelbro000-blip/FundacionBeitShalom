@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina with context %}
+
+{% block titulo %}Política de privacidad{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Política de privacidad") }}
+
+<section class="registro-colaborador registro-colaborador--estrecho">
+    <div class="container">
+
+        <header class="encabezado">
+            <h6 class="sec-title__tagline">Protección de datos</h6>
+            <h2 class="sec-title__title">Cómo protegemos los datos que compartes</h2>
+        </header>
+
+        <article class="texto-legal">
+
+            <section class="seccion">
+                <h3>1. Responsable de los datos</h3>
+                <p>
+                    La {{ fundacion.nombre }} es responsable de la información que registras
+                    en este sitio y la utiliza únicamente para gestionar el programa de
+                    colaboradores y responder tus mensajes.
+                </p>
+            </section>
+
+            <section class="seccion">
+                <h3>2. Qué datos recopilamos</h3>
+                <p>Solo pedimos la información necesaria para evaluar tu colaboración o responderte:</p>
+                <ul>
+                    <li>Nombre completo, país de residencia, correo electrónico y teléfono (opcional).</li>
+                    <li>Áreas de interés, modalidad y disponibilidad.</li>
+                    <li>El texto que escribas sobre tu motivación o en tu mensaje.</li>
+                </ul>
+            </section>
+
+            <section class="seccion">
+                <h3>3. Para qué los usamos</h3>
+                <ul>
+                    <li>Evaluar tu solicitud y contactarte con el resultado.</li>
+                    <li>Coordinar actividades de acuerdo con tus áreas de interés y disponibilidad.</li>
+                    <li>Responder los mensajes enviados desde la página de contacto.</li>
+                    <li>Elaborar estadísticas internas que no identifican a ninguna persona.</li>
+                </ul>
+                <p>No vendemos ni compartimos tus datos con terceros.</p>
+            </section>
+
+            <section class="seccion">
+                <h3>4. Quién puede verlos</h3>
+                <p>
+                    Solo el personal autorizado de la fundación, mediante un panel protegido
+                    con usuario y contraseña. Ninguna persona del público puede consultar
+                    los registros de otras personas.
+                </p>
+            </section>
+
+            <section class="seccion">
+                <h3>5. Cómo los protegemos</h3>
+                <ul>
+                    <li>Comunicación cifrada mediante HTTPS en el sitio publicado.</li>
+                    <li>Validación de la información en el navegador y en el servidor.</li>
+                    <li>Consultas a la base de datos protegidas contra inyección SQL.</li>
+                    <li>Contraseñas del personal almacenadas como hash, nunca en texto plano.</li>
+                </ul>
+            </section>
+
+            <section class="seccion">
+                <h3>6. Cuánto tiempo los conservamos</h3>
+                <ul>
+                    <li>Mientras participes como colaborador y hasta que solicites su eliminación.</li>
+                    <li>Las solicitudes no aprobadas se eliminan después de 12 meses.</li>
+                </ul>
+            </section>
+
+            <section class="seccion">
+                <h3>7. Tus derechos</h3>
+                <p>
+                    Puedes pedir en cualquier momento que actualicemos o eliminemos tus datos
+                    escribiendo a <a href="mailto:{{ fundacion.correo }}">{{ fundacion.correo }}</a>.
+                    El personal autorizado puede eliminar toda tu información desde el panel administrativo.
+                </p>
+            </section>
+
+            <section class="seccion">
+                <h3>8. Trabajo con niños</h3>
+                <p>
+                    Como trabajamos en beneficio de niños, la inscripción como colaborador
+                    no constituye una autorización para trabajar directamente con ellos.
+                    Cualquier participación en actividades con menores requiere un proceso
+                    de verificación adicional e independiente.
+                </p>
+            </section>
+
+        </article>
+
+        <p class="acciones-centradas">
+            <a class="kidearn-btn" href="{{ url_for('colaborador.registrar') }}"><span>Ir al formulario de registro</span></a>
+        </p>
+
+    </div>
+</section>
+
+{% endblock %}

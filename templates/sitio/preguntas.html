@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import estatico, encabezado_pagina, titulo_seccion, acordeon with context %}
+
+{% block titulo %}Preguntas frecuentes{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Preguntas frecuentes") }}
+
+<section class="faq-page">
+    <div class="container">
+        {{ titulo_seccion("Preguntas frecuentes", "Resolvemos tus dudas") }}
+        <div class="row">
+            <div class="col-lg-12">
+                {{ acordeon(preguntas) }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="faq-cta wow fadeInUp" data-wow-duration="1500ms">
+    <div class="container">
+        <div class="faq-cta__inner">
+            <div class="faq-cta__bg" style="background-image: url({{ estatico('assets/images/backgrounds/faq-cta-bg-1-1.jpg') }});"></div>
+            <div class="faq-cta__icon"><i class="icon-call"></i></div>
+            <h2 class="faq-cta__title"><span>¿Todavía tienes preguntas?</span></h2>
+            <p class="faq-cta__text">Llámanos o <a href="{{ url_for('sitio.contacto') }}">escríbenos</a></p>
+            <a href="tel:{{ fundacion.telefono_enlace }}" class="faq-cta__link">{{ fundacion.telefono }}</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

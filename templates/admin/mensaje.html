@@ -1,0 +1,52 @@
+{% extends "admin/base_admin.html" %}
+
+{% block titulo %}Mensaje de {{ mensaje.nombre }}{% endblock %}
+
+{% block contenido_admin %}
+
+<p class="migas"><a href="{{ url_for('admin.mensajes') }}">← Volver a los mensajes</a></p>
+
+<div class="encabezado-pagina">
+    <div>
+        <h1>{{ mensaje.asunto_texto }}</h1>
+        <p class="subtitulo">Mensaje n.º {{ mensaje.id }} · recibido el {{ mensaje.fecha | fecha }}</p>
+    </div>
+    <div class="acciones">
+        <a class="boton" href="mailto:{{ mensaje.correo }}?subject={{ ('Re: ' ~ mensaje.asunto_texto) | urlencode }}">Responder por correo</a>
+    </div>
+</div>
+
+<div class="detalle-grid">
+    <section class="tarjeta">
+        <h2>Remitente</h2>
+        <dl class="datos">
+            <dt>Nombre</dt>
+            <dd>{{ mensaje.nombre }}</dd>
+            <dt>Correo electrónico</dt>
+            <dd><a href="mailto:{{ mensaje.correo }}">{{ mensaje.correo }}</a></dd>
+            <dt>Teléfono</dt>
+            <dd>{{ mensaje.telefono or "No indicado" }}</dd>
+        </dl>
+    </section>
+
+    <section class="tarjeta">
+        <h2>Mensaje</h2>
+        <p class="motivacion">{{ mensaje.mensaje }}</p>
+    </section>
+</div>
+
+{% if g.usuario.puede_evaluar_solicitudes() %}
+<section class="tarjeta zona-peligro">
+    <div>
+        <h2>Eliminar mensaje</h2>
+        <p>Borra este mensaje de forma permanente cuando ya no sea necesario conservarlo.</p>
+    </div>
+    <form method="POST" action="{{ url_for('admin.eliminar_mensaje', id_mensaje=mensaje.id) }}"
+          data-confirmar="¿Eliminar definitivamente el mensaje de {{ mensaje.nombre }}?">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="boton boton-peligro">Eliminar mensaje</button>
+    </form>
+</section>
+{% endif %}
+
+{% endblock %}

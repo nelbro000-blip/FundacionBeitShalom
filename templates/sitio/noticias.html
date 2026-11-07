@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina, tarjeta_noticia with context %}
+
+{% block titulo %}Noticias{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Noticias") }}
+
+<section class="blog-one blog-one--page">
+    <div class="container">
+        <div class="row gutter-y-30">
+            {% for noticia in noticias %}
+            <div class="col-md-6 col-lg-4">{{ tarjeta_noticia(noticia, loop.index0) }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

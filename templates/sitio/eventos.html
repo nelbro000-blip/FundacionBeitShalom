@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina, tarjeta_evento with context %}
+
+{% block titulo %}Eventos{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Eventos", [("Equipo y eventos", url_for('sitio.equipo'))]) }}
+
+<section class="event-page">
+    <div class="container">
+        <div class="row gutter-y-30">
+            {% for evento in eventos %}
+            <div class="col-md-12 col-lg-6 wow fadeInUp" data-wow-delay="{{ (loop.index0 % 2 + 1) * 100 }}ms">
+                {{ tarjeta_evento(evento) }}
+            </div>
+            {% else %}
+            <p class="text-center">Pronto publicaremos nuevos eventos.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import estatico, encabezado_pagina, titulo_seccion, llamado_colaborar, seccion_testimonios, seccion_equipo with context %}
+
+{% block titulo %}Nosotros{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Nosotros") }}
+
+<section class="about-four">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 wow fadeInLeft" data-wow-delay="300ms">
+                <div class="about-four__image">
+                    <div class="about-four__image__shape1">
+                        <img src="{{ estatico('assets/images/shapes/about-4-shape-1.png') }}" alt="">
+                    </div>
+                    <div class="about-four__image__one kidearn-tilt" data-tilt-options='{ "glare": false, "maxGlare": 0, "maxTilt": 3, "speed": 700, "scale": 1 }'>
+                        <img src="{{ estatico('assets/images/resources/about-4-1.jpg') }}" alt="Actividad con niños y niñas de la fundación">
+                        <div class="about-four__image__one-bottom"></div>
+                    </div>
+                    <div class="about-four__image__two wow fadeInUp" data-wow-delay="500ms">
+                        <img src="{{ estatico('assets/images/resources/about-4-2.jpg') }}" alt="Familias de la fundación">
+                    </div>
+                    <div class="about-four__image__bg-shape">
+                        <img src="{{ estatico('assets/images/shapes/about-4-shape-2.png') }}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 wow fadeInRight" data-wow-delay="200ms">
+                <div class="about-four__content">
+                    {{ titulo_seccion("Quiénes somos", "Bienvenidos a la " ~ fundacion.nombre, "text-left") }}
+                    <p class="about-four__content__text">{{ fundacion.bienvenida }}</p>
+                    <div class="about-four__info" style="--accent-color: #F25334;">
+                        <div class="about-four__info__icon"><span class="icon-trophy1"></span></div>
+                        <h3 class="about-four__info__title">Nuestra misión</h3>
+                        <p class="about-four__info__text">{{ fundacion.mision }}</p>
+                    </div>
+                    <div class="about-four__info" style="--accent-color: #2390FF;">
+                        <div class="about-four__info__icon"><span class="icon-interest-rate"></span></div>
+                        <h3 class="about-four__info__title">Nuestra visión</h3>
+                        <p class="about-four__info__text">{{ fundacion.vision }}</p>
+                    </div>
+                    <a href="{{ url_for('sitio.programas') }}" class="kidearn-btn"><span>Conoce nuestros programas</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ llamado_colaborar() }}
+
+<section class="funfact-one">
+    <div class="container">
+        <div class="row gutter-y-30">
+            {% for cifra in cifras %}
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="{{ loop.index * 100 }}ms">
+                <div class="funfact-one__item text-center {{ 'funfact-one__item--noborder' if loop.last }}">
+                    <div class="funfact-one__icon"><span class="{{ cifra.icono }}"></span></div>
+                    <div class="funfact-one__count">
+                        <span class="count-box">
+                            <span class="count-text" data-stop="{{ cifra.valor }}" data-speed="1500"></span>
+                        </span>{{ cifra.sufijo }}
+                    </div>
+                    <p class="funfact-one__title">{{ cifra.titulo }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{{ seccion_testimonios(testimonios, "testimonial-one--about-page") }}
+
+{{ seccion_equipo(equipo) }}
+
+{% endblock %}

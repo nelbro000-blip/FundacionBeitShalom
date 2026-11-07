@@ -1,0 +1,148 @@
+{% extends "admin/base_admin.html" %}
+{% from "admin/macros.html" import estado_badge %}
+
+{% block titulo %}{{ colaborador.nombre }} · Panel administrativo{% endblock %}
+
+{% block contenido_admin %}
+{% set acciones = {
+    "Pendiente": "Volver a pendiente",
+    "En revisión": "Pasar a revisión",
+    "Aprobado": "Aprobar solicitud",
+    "Rechazado": "Rechazar solicitud"
+} %}
+
+<p class="migas"><a href="{{ url_for('admin.listado') }}">← Volver al listado</a></p>
+
+<div class="encabezado-pagina">
+    <div>
+        <h1>{{ colaborador.nombre }}</h1>
+        <p class="subtitulo">Solicitud n.º {{ colaborador.id }} · recibida el {{ colaborador.fecha_registro | fecha }}</p>
+    </div>
+    <div class="estado-actual">{{ estado_badge(colaborador.estado) }}</div>
+</div>
+
+<div class="detalle-grid">
+
+    <section class="tarjeta">
+        <h2>Información personal</h2>
+        <dl class="datos">
+            <dt>Correo electrónico</dt>
+            <dd><a href="mailto:{{ colaborador.correo }}">{{ colaborador.correo }}</a></dd>
+
+            <dt>Teléfono / WhatsApp</dt>
+            <dd>{{ colaborador.telefono or "No indicado" }}</dd>
+
+            <dt>País de residencia</dt>
+            <dd>{{ colaborador.pais }}</dd>
+
+            <dt>Política de privacidad</dt>
+            <dd>Aceptada al registrarse</dd>
+        </dl>
+    </section>
+
+    <section class="tarjeta">
+        <h2>Colaboración</h2>
+        <dl class="datos">
+            <dt>Áreas de interés</dt>
+            <dd>
+                <ul class="chips">
+                    {% for area in colaborador.nombres_areas %}
+                    <li>{{ area }}</li>
+                    {% endfor %}
+                </ul>
+            </dd>
+
+            <dt>Modalidad</dt>
+            <dd>{{ colaborador.modalidad }}</dd>
+
+            <dt>Disponibilidad</dt>
+            <dd>{{ colaborador.disponibilidad }}</dd>
+        </dl>
+    </section>
+
+    <section class="tarjeta tarjeta-ancha">
+        <h2>Motivación</h2>
+        {% if colaborador.motivacion %}
+        <p class="motivacion">{{ colaborador.motivacion }}</p>
+        {% else %}
+        <p class="texto-suave">La persona no escribió una motivación.</p>
+        {% endif %}
+    </section>
+
+    <section class="tarjeta">
+        <h2>Evaluar solicitud</h2>
+
+        {% if g.usuario.puede_evaluar_solicitudes() %}
+        <form id="formEvaluacion" class="form-evaluacion" method="POST"
+              action="{{ url_for('admin.cambiar_estado', id_colaborador=colaborador.id) }}">
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <label for="comentario">
+                Comentario <span class="opcional">(obligatorio para rechazar)</span>
+            </label>
+            <textarea id="comentario" name="comentario" rows="3"
+                      maxlength="{{ reglas.COMENTARIO_MAX }}"
+                      aria-describedby="errorComentario"
+                      placeholder="Ej.: Se coordinó una entrevista para el sábado.">{{ comentario }}</textarea>
+            <p id="errorComentario" class="error"></p>
+
+            <div class="botones-estado">
+                {% for estado in estados if estado != colaborador.estado %}
+                <button type="submit" name="estado" value="{{ estado }}"
+                        class="boton boton-estado boton-{{ estado | clase_estado }}">{{ acciones[estado] }}</button>
+                {% endfor %}
+            </div>
+
+        </form>
+        {% else %}
+        <p class="texto-suave">
+            Tu rol ({{ g.usuario.rol }}) permite consultar la información,
+            pero no cambiar el estado de las solicitudes.
+        </p>
+        {% endif %}
+    </section>
+
+    <section class="tarjeta">
+        <h2>Historial de la solicitud</h2>
+        <ol class="historial">
+            {% for cambio in historial %}
+            <li>
+                <p class="historial-cambio">
+                    {{ estado_badge(cambio.estado_anterior) }}
+                    <span aria-label="cambió a">→</span>
+                    {{ estado_badge(cambio.estado_nuevo) }}
+                </p>
+                <p class="texto-suave">{{ cambio.fecha | fecha }} · {{ cambio.usuario }}</p>
+                {% if cambio.comentario %}
+                <p class="historial-comentario">{{ cambio.comentario }}</p>
+                {% endif %}
+            </li>
+            {% endfor %}
+            <li>
+                <p class="historial-cambio">Solicitud recibida</p>
+                <p class="texto-suave">{{ colaborador.fecha_registro | fecha }} · Formulario público</p>
+            </li>
+        </ol>
+    </section>
+
+</div>
+
+{% if g.usuario.puede_evaluar_solicitudes() %}
+<section class="tarjeta zona-peligro">
+    <div>
+        <h2>Eliminar datos</h2>
+        <p>
+            Borra de forma permanente toda la información de esta persona, por ejemplo
+            si solicita la supresión de sus datos. Esta acción no se puede deshacer.
+        </p>
+    </div>
+    <form method="POST" action="{{ url_for('admin.eliminar', id_colaborador=colaborador.id) }}"
+          data-confirmar="¿Eliminar definitivamente todos los datos de {{ colaborador.nombre }}? Esta acción no se puede deshacer.">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="boton boton-peligro">Eliminar datos</button>
+    </form>
+</section>
+{% endif %}
+
+{% endblock %}

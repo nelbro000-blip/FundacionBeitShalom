@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{% block titulo %}Panel administrativo{% endblock %} · Fundación Beit Shalom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='assets/images/favicons/favicon-32x32.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body class="admin">
+
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+    <header class="barra-admin">
+        <div class="barra-admin-interior">
+
+            <a class="marca-admin" href="{{ url_for('admin.dashboard') }}">
+                <img src="{{ url_for('static', filename='assets/images/logo-light.png') }}" alt="Fundación Internacional Beit Shalom" width="130">
+                <small>Panel administrativo</small>
+            </a>
+
+            <nav class="menu-admin" aria-label="Secciones del panel">
+                <a href="{{ url_for('admin.dashboard') }}"
+                   {% if request.endpoint == 'admin.dashboard' %}aria-current="page"{% endif %}>Dashboard</a>
+                <a href="{{ url_for('admin.listado') }}"
+                   {% if request.endpoint in ('admin.listado', 'admin.detalle') %}aria-current="page"{% endif %}>Colaboradores</a>
+                <a href="{{ url_for('admin.mensajes') }}"
+                   {% if request.endpoint in ('admin.mensajes', 'admin.mensaje') %}aria-current="page"{% endif %}>
+                    Mensajes
+                    {% if mensajes_sin_leer %}<span class="contador-menu" aria-label="{{ mensajes_sin_leer }} sin leer">{{ mensajes_sin_leer }}</span>{% endif %}
+                </a>
+                <a href="{{ url_for('sitio.inicio') }}" target="_blank" rel="noopener">Ver sitio ↗</a>
+            </nav>
+
+            <div class="usuario-admin">
+                <span class="usuario-nombre">
+                    {{ g.usuario.nombre_completo }}
+                    <small>{{ g.usuario.rol }}</small>
+                </span>
+                <form method="POST" action="{{ url_for('admin.logout') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="boton-salir">Cerrar sesión</button>
+                </form>
+            </div>
+
+        </div>
+    </header>
+
+    <main id="contenido" class="admin-contenido">
+
+        {% include "parciales/mensajes.html" %}
+
+        {% block contenido_admin %}{% endblock %}
+
+    </main>
+
+    <footer class="pie pie-admin">
+        <p>Fundación Internacional Beit Shalom · Panel administrativo · Uso exclusivo del personal autorizado</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+
+</body>
+
+</html>

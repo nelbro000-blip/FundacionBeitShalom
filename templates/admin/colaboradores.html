@@ -1,0 +1,133 @@
+{% extends "admin/base_admin.html" %}
+{% from "admin/macros.html" import estado_badge %}
+
+{% block titulo %}Colaboradores · Panel administrativo{% endblock %}
+
+{% block contenido_admin %}
+{% set parametros = filtros.como_parametros() %}
+
+<div class="encabezado-pagina">
+    <div>
+        <h1>Colaboradores</h1>
+        <p class="subtitulo">
+            {{ resultado.total }} {{ "solicitud" if resultado.total == 1 else "solicitudes" }}
+            {{ "con los filtros aplicados" if filtros.activos else "registradas" }}.
+        </p>
+    </div>
+    <div class="acciones">
+        <a class="boton boton-secundario" href="{{ url_for('admin.exportar', **parametros) }}">Exportar a Excel</a>
+    </div>
+</div>
+
+<form class="filtros tarjeta" method="GET" action="{{ url_for('admin.listado') }}" role="search">
+
+    <div class="filtro filtro-busqueda">
+        <label for="q">Buscar</label>
+        <input type="search" id="q" name="q" maxlength="100"
+               placeholder="Nombre o correo electrónico" value="{{ filtros.texto }}">
+    </div>
+
+    <div class="filtro">
+        <label for="filtroPais">País</label>
+        <select id="filtroPais" name="pais" data-autoenvio>
+            <option value="">Todos</option>
+            {% for pais in paises %}
+            <option value="{{ pais }}" {% if filtros.pais == pais %}selected{% endif %}>{{ "Otro país" if pais == "Otro" else pais }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="filtro">
+        <label for="filtroArea">Área de colaboración</label>
+        <select id="filtroArea" name="area" data-autoenvio>
+            <option value="">Todas</option>
+            {% for area in areas %}
+            <option value="{{ area.id }}" {% if filtros.area_id == area.id %}selected{% endif %}>{{ area.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="filtro">
+        <label for="filtroEstado">Estado</label>
+        <select id="filtroEstado" name="estado" data-autoenvio>
+            <option value="">Todos</option>
+            {% for estado in estados %}
+            <option value="{{ estado }}" {% if filtros.estado == estado %}selected{% endif %}>{{ estado }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="filtro-acciones">
+        <button type="submit" class="boton">Buscar</button>
+        {% if filtros.activos %}
+        <a class="boton boton-enlace" href="{{ url_for('admin.listado') }}">Limpiar filtros</a>
+        {% endif %}
+    </div>
+
+</form>
+
+{% if resultado.elementos %}
+
+<div class="tarjeta tabla-contenedor">
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo electrónico</th>
+                <th scope="col">País</th>
+                <th scope="col">Áreas de colaboración</th>
+                <th scope="col">Modalidad</th>
+                <th scope="col">Registro</th>
+                <th scope="col">Estado</th>
+                <th scope="col"><span class="solo-lectores">Acciones</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for colaborador in resultado.elementos %}
+            <tr>
+                <td>
+                    <a class="enlace-nombre" href="{{ url_for('admin.detalle', id_colaborador=colaborador.id) }}">{{ colaborador.nombre }}</a>
+                </td>
+                <td>{{ colaborador.correo }}</td>
+                <td>{{ colaborador.pais }}</td>
+                <td class="celda-areas">{{ colaborador.nombres_areas | join(", ") }}</td>
+                <td>{{ colaborador.modalidad }}</td>
+                <td class="numero-celda">{{ colaborador.fecha_registro | fecha(false) }}</td>
+                <td>{{ estado_badge(colaborador.estado) }}</td>
+                <td>
+                    <a class="boton boton-pequeno" href="{{ url_for('admin.detalle', id_colaborador=colaborador.id) }}"
+                       aria-label="Ver la solicitud de {{ colaborador.nombre }}">Ver</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<nav class="paginacion" aria-label="Paginación">
+    <p>Mostrando {{ resultado.desde }}–{{ resultado.hasta }} de {{ resultado.total }}</p>
+    <div class="paginacion-enlaces">
+        {% if resultado.tiene_anterior %}
+        <a class="boton boton-secundario boton-pequeno" href="{{ url_for('admin.listado', pagina=resultado.pagina - 1, **parametros) }}">← Anterior</a>
+        {% endif %}
+        <span>Página {{ resultado.pagina }} de {{ resultado.paginas }}</span>
+        {% if resultado.tiene_siguiente %}
+        <a class="boton boton-secundario boton-pequeno" href="{{ url_for('admin.listado', pagina=resultado.pagina + 1, **parametros) }}">Siguiente →</a>
+        {% endif %}
+    </div>
+</nav>
+
+{% else %}
+
+<div class="tarjeta vacio">
+    {% if filtros.activos %}
+    No se encontraron solicitudes con estos filtros.
+    <a href="{{ url_for('admin.listado') }}">Ver todas</a>
+    {% else %}
+    Aún no hay solicitudes registradas.
+    {% endif %}
+</div>
+
+{% endif %}
+
+{% endblock %}

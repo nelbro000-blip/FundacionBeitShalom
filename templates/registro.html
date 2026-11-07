@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina with context %}
+
+{% block titulo %}Quiero colaborar{% endblock %}
+{% block descripcion %}Regístrate como colaborador de la {{ fundacion.nombre }} y cuéntanos cómo te gustaría ayudar.{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Quiero colaborar", [("Apóyanos", url_for('sitio.apoyanos'))]) }}
+
+<section class="registro-colaborador">
+    <div class="container">
+
+        <header class="encabezado">
+            <h6 class="sec-title__tagline">Programa de colaboradores</h6>
+            <h2 class="sec-title__title">¡Queremos conocerte!</h2>
+            <p>
+                Tu disposición para ayudar puede marcar
+                una diferencia en la vida de un niño.
+                Registra tus datos y cuéntanos cómo te gustaría colaborar.
+            </p>
+        </header>
+
+        {% if aviso %}
+        <div class="alerta alerta-error" role="alert">{{ aviso }}</div>
+        {% endif %}
+
+        {% if errores %}
+        <div class="alerta alerta-error" role="alert">
+            <p><strong>Revisa la siguiente información:</strong></p>
+            <ul>
+                {% for campo, mensaje in errores.items() %}
+                <li><a href="#{{ campo }}">{{ mensaje }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form id="formRegistro"
+              method="POST"
+              action="{{ url_for('colaborador.registrar') }}">
+
+            <input type="hidden"
+                   name="csrf_token"
+                   value="{{ csrf_token() }}">
+
+            <!-- 01. Información personal -->
+            <section class="seccion seccion--naranja" aria-labelledby="tituloPersonal">
+
+                <h3 id="tituloPersonal"><span class="numero">01</span> Información personal</h3>
+
+                <div class="campo">
+                    <label for="nombre">
+                        Nombre completo <span class="obligatorio" aria-hidden="true">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        required
+                        minlength="{{ reglas.NOMBRE_MIN }}"
+                        maxlength="{{ reglas.NOMBRE_MAX }}"
+                        pattern="[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ '.\-]*"
+                        autocomplete="name"
+                        placeholder="Tu nombre completo"
+                        value="{{ colaborador.nombre }}"
+                        aria-describedby="errorNombre"
+                        {% if errores.get('nombre') %}class="campo-invalido" aria-invalid="true"{% endif %}
+                    >
+                    <p id="errorNombre" class="error">{{ errores.get('nombre', '') }}</p>
+                </div>
+
+                <div class="fila-campos">
+
+                    <div class="campo">
+                        <label for="pais">
+                            País de residencia <span class="obligatorio" aria-hidden="true">*</span>
+                        </label>
+                        <select id="pais"
+                                name="pais"
+                                required
+                                autocomplete="country-name"
+                                aria-describedby="errorPais"
+                                {% if errores.get('pais') %}class="campo-invalido" aria-invalid="true"{% endif %}>
+                            <option value="">Seleccionar país</option>
+                            {% for pais in reglas.PAISES %}
+                            <option value="{{ pais }}" {% if colaborador.pais == pais %}selected{% endif %}>
+                                {{ "Otro país" if pais == "Otro" else pais }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <p id="errorPais" class="error">{{ errores.get('pais', '') }}</p>
+                    </div>
+
+                    <div class="campo">
+                        <label for="telefono">
+                            Teléfono / WhatsApp <span class="opcional">(opcional)</span>
+                        </label>
+                        <input
+                            type="tel"
+                            id="telefono"
+                            name="telefono"
+                            maxlength="{{ reglas.TELEFONO_MAX }}"
+                            pattern="\+?[0-9\s\(\)\-]{7,30}"
+                            inputmode="tel"
+                            autocomplete="tel"
+                            placeholder="Número de contacto"
+                            value="{{ colaborador.telefono }}"
+                            aria-describedby="ayudaTelefono errorTelefono"
+                            {% if errores.get('telefono') %}class="campo-invalido" aria-invalid="true"{% endif %}
+                        >
+                        <p id="ayudaTelefono" class="ayuda">Incluye el código de país, por ejemplo +503 7000 0000.</p>
+                        <p id="errorTelefono" class="error">{{ errores.get('telefono', '') }}</p>
+                    </div>
+
+                </div>
+
+                <div class="campo">
+                    <label for="correo">
+                        Correo electrónico <span class="obligatorio" aria-hidden="true">*</span>
+                    </label>
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        required
+                        maxlength="{{ reglas.CORREO_MAX }}"
+                        pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"
+                        autocomplete="email"
+                        placeholder="correo@ejemplo.com"
+                        value="{{ colaborador.correo }}"
+                        aria-describedby="ayudaCorreo errorCorreo"
+                        {% if errores.get('correo') %}class="campo-invalido" aria-invalid="true"{% endif %}
+                    >
+                    <p id="ayudaCorreo" class="ayuda">Te escribiremos a este correo para darte respuesta.</p>
+                    <p id="errorCorreo" class="error">{{ errores.get('correo', '') }}</p>
+                </div>
+
+            </section>
+
+            <!-- 02. Áreas de colaboración (se guardan en la tabla ColaboradorAreas) -->
+            <section class="seccion seccion--verde-azulado" aria-labelledby="tituloAreas">
+
+                <h3 id="tituloAreas"><span class="numero">02</span> ¿Cómo deseas colaborar?</h3>
+
+                <p class="descripcion">Puedes seleccionar varias áreas de interés.</p>
+
+                <fieldset class="grupo-opciones" aria-describedby="errorAreas">
+                    <legend class="solo-lectores">Áreas de colaboración</legend>
+                    <div id="areas"
+                         class="opciones{% if errores.get('areas') %} grupo-invalido{% endif %}"
+                         tabindex="-1">
+                        {% for area in areas %}
+                        <label class="opcion">
+                            <input type="checkbox"
+                                   name="areas"
+                                   value="{{ area.id }}"
+                                   {% if area.id in colaborador.areas %}checked{% endif %}>
+                            <span>{{ area.nombre }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+
+                <p id="errorAreas" class="error">{{ errores.get('areas', '') }}</p>
+
+            </section>
+
+            <!-- 03. Disponibilidad -->
+            <section class="seccion seccion--amarillo" aria-labelledby="tituloDisponibilidad">
+
+                <h3 id="tituloDisponibilidad"><span class="numero">03</span> Disponibilidad</h3>
+
+                <div class="fila-campos">
+
+                    <div class="campo">
+                        <label for="modalidad">
+                            Modalidad de colaboración <span class="obligatorio" aria-hidden="true">*</span>
+                        </label>
+                        <select id="modalidad"
+                                name="modalidad"
+                                required
+                                aria-describedby="errorModalidad"
+                                {% if errores.get('modalidad') %}class="campo-invalido" aria-invalid="true"{% endif %}>
+                            <option value="">Seleccionar modalidad</option>
+                            {% for modalidad in reglas.MODALIDADES %}
+                            <option value="{{ modalidad }}" {% if colaborador.modalidad == modalidad %}selected{% endif %}>{{ modalidad }}</option>
+                            {% endfor %}
+                        </select>
+                        <p id="errorModalidad" class="error">{{ errores.get('modalidad', '') }}</p>
+                    </div>
+
+                    <div class="campo">
+                        <label for="disponibilidad">
+                            Disponibilidad <span class="obligatorio" aria-hidden="true">*</span>
+                        </label>
+                        <select id="disponibilidad"
+                                name="disponibilidad"
+                                required
+                                aria-describedby="errorDisponibilidad"
+                                {% if errores.get('disponibilidad') %}class="campo-invalido" aria-invalid="true"{% endif %}>
+                            <option value="">Seleccionar disponibilidad</option>
+                            {% for disponibilidad in reglas.DISPONIBILIDADES %}
+                            <option value="{{ disponibilidad }}" {% if colaborador.disponibilidad == disponibilidad %}selected{% endif %}>{{ disponibilidad }}</option>
+                            {% endfor %}
+                        </select>
+                        <p id="errorDisponibilidad" class="error">{{ errores.get('disponibilidad', '') }}</p>
+                    </div>
+
+                </div>
+
+                <div class="campo">
+                    <label for="motivacion">
+                        ¿Por qué deseas colaborar? <span class="opcional">(opcional)</span>
+                    </label>
+                    <textarea
+                        id="motivacion"
+                        name="motivacion"
+                        maxlength="{{ reglas.MOTIVACION_MAX }}"
+                        rows="5"
+                        placeholder="Cuéntanos un poco sobre tu motivación..."
+                        aria-describedby="contadorMotivacion errorMotivacion"
+                        {% if errores.get('motivacion') %}class="campo-invalido" aria-invalid="true"{% endif %}
+                    >{{ colaborador.motivacion }}</textarea>
+                    <p class="contador" id="contadorMotivacion">
+                        {{ colaborador.motivacion | length }} / {{ reglas.MOTIVACION_MAX }} caracteres
+                    </p>
+                    <p id="errorMotivacion" class="error">{{ errores.get('motivacion', '') }}</p>
+                </div>
+
+            </section>
+
+            <!-- 04. Confirmación -->
+            <section class="seccion seccion--verde" aria-labelledby="tituloConfirmacion">
+
+                <h3 id="tituloConfirmacion"><span class="numero">04</span> Confirmación</h3>
+
+                <label class="privacidad{% if errores.get('privacidad') %} grupo-invalido{% endif %}">
+                    <input
+                        type="checkbox"
+                        id="privacidad"
+                        name="privacidad"
+                        value="1"
+                        required
+                        aria-describedby="errorPrivacidad"
+                        {% if colaborador.acepta_privacidad %}checked{% endif %}
+                    >
+                    <span>
+                        Acepto el tratamiento de mis datos
+                        personales conforme a la
+                        <a href="{{ url_for('colaborador.privacidad') }}" target="_blank" rel="noopener">política
+                        de privacidad</a>.
+                    </span>
+                </label>
+                <p id="errorPrivacidad" class="error">{{ errores.get('privacidad', '') }}</p>
+
+            </section>
+
+            <p id="errorFormulario" class="error error-general" role="alert"></p>
+
+            <button type="submit" class="btn-enviar">
+
+                Enviar solicitud de registro
+
+            </button>
+
+        </form>
+
+        <p class="nota nota-registro">
+            La inscripción como colaborador no constituye una autorización para trabajar
+            directamente con niños. Cualquier participación en actividades con menores
+            requiere un proceso de verificación independiente.
+        </p>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/validaciones.js') }}" defer></script>
+{% endblock %}

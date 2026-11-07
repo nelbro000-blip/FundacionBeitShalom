@@ -1,0 +1,368 @@
+{
+    "fundacion": {
+        "nombre": "Fundación Internacional Beit Shalom",
+        "nombre_corto": "Fundación Beit Shalom",
+        "lema": "Juntos podemos hacer la diferencia.",
+        "descripcion": "Fundación sin ánimo de lucro que acompaña a niños y niñas de comunidades vulnerables para que descubran y potencien sus talentos y alcancen metas de superación.",
+        "quienes_somos": "En la Fundación Internacional Beit Shalom acompañamos a niños y niñas de comunidades vulnerables para que descubran y potencien sus talentos y alcancen metas de superación. Colaboramos con los padres de familia en la formación de sus hijos como personas con criterios de verdad, justicia y responsabilidad.",
+        "bienvenida": "Somos una fundación sin ánimo de lucro que trabaja por la formación de niños y niñas de comunidades vulnerables, ayudándolos a descubrir y potenciar sus talentos para alcanzar metas de superación.",
+        "mision": "Brindar a niños y niñas de comunidades vulnerables oportunidades para descubrir y desarrollar sus talentos.",
+        "vision": "Ser una fundación reconocida por generar oportunidades y formar niños y niñas con responsabilidad, criterio y compromiso con su entorno.",
+        "direccion": "Av. Calle 26 No 59-51, Edificio Argos - Torre 3, Piso 4, Bogotá, Colombia",
+        "telefono": "+57 44128293",
+        "telefono_enlace": "+5744128293",
+        "correo": "contacto@fundacionbeitshalom.org",
+        "horario": "Lun a Vie: 8:00 am - 5:00 pm",
+        "mapa": "https://www.google.com/maps?q=Avenida+Calle+26+No+59-51%2C+Bogot%C3%A1%2C+Colombia&output=embed",
+        "video": "https://www.youtube.com/watch?v=0MuL8fd3pb8",
+        "redes": [
+            {"nombre": "LinkedIn", "icono": "fab fa-linkedin-in", "url": "https://www.linkedin.com/company/fundacion-beit-shalom"},
+            {"nombre": "Facebook", "icono": "fab fa-facebook", "url": "https://www.facebook.com/FundacionBeitShalom"},
+            {"nombre": "Instagram", "icono": "fab fa-instagram", "url": "https://www.instagram.com/FundacionBeitShalom"}
+        ]
+    },
+
+    "diapositivas": [
+        {"titulo": "Descubre tus talentos y vive con propósito", "imagen": "assets/images/backgrounds/hero-banner-1.jpg",
+         "boton": "Quiero colaborar", "destino": "colaborador.registrar"},
+        {"titulo": "Formamos niños y niñas con valores", "imagen": "assets/images/backgrounds/hero-banner-1-2.jpg",
+         "boton": "Conoce nuestros programas", "destino": "sitio.programas"},
+        {"titulo": "Juntos podemos hacer la diferencia", "imagen": "assets/images/backgrounds/hero-banner-1-3.jpg",
+         "boton": "Formas de apoyar", "destino": "sitio.apoyanos"}
+    ],
+
+    "pilares": [
+        {"titulo": "Ambiente familiar", "imagen": "assets/images/resources/service-1-1.jpg", "color": "#75C137"},
+        {"titulo": "Entorno seguro", "imagen": "assets/images/resources/service-1-2.jpg", "color": "#26A6A1"},
+        {"titulo": "Equipo comprometido", "imagen": "assets/images/resources/service-1-3.jpg", "color": "#F25334"},
+        {"titulo": "Aprender jugando", "imagen": "assets/images/resources/service-1-4.jpg", "color": "#FFAA23"}
+    ],
+
+    "cifras": [
+        {"valor": 13, "sufijo": "", "titulo": "Valores que formamos", "icono": "icon-graduated"},
+        {"valor": 5, "sufijo": "", "titulo": "Objetivos institucionales", "icono": "icon-online-learning"},
+        {"valor": 100, "sufijo": "%", "titulo": "Sin ánimo de lucro", "icono": "icon-rating"},
+        {"valor": 6, "sufijo": "", "titulo": "Ejes de formación", "icono": "icon-instructor"}
+    ],
+
+    "programas": [
+        {
+            "slug": "formacion-etica-y-religiosa",
+            "titulo": "Formación ética y religiosa",
+            "resumen": "Instruimos en la fe cristiana y el compromiso de justicia social.",
+            "descripcion": "Instruimos a niños y niñas en la fe cristiana para que comprendan la Palabra de Dios, participen en las actividades de la iglesia y vivan el testimonio y el compromiso de justicia social.",
+            "color": "#F25334",
+            "icono": "icon-crawling-baby-silhouette",
+            "imagen": "assets/images/program/program-3-1.jpg",
+            "imagen_inicio": "assets/images/program/program-1-1.jpg",
+            "imagen_detalle": "assets/images/program/program-d-6.jpg"
+        },
+        {
+            "slug": "formacion-humana-y-de-valores",
+            "titulo": "Formación humana y de valores",
+            "resumen": "Formamos en honestidad, respeto, solidaridad, gratitud y alegría.",
+            "descripcion": "Formamos a niños y niñas en valores fundamentales como la honestidad, el respeto, la responsabilidad, la solidaridad, la gratitud, la generosidad y la alegría.",
+            "color": "#75C137",
+            "icono": "icon-playtime",
+            "imagen": "assets/images/program/program-3-2.jpg",
+            "imagen_inicio": "assets/images/program/program-1-2.jpg",
+            "imagen_detalle": "assets/images/program/program-d-5.jpg"
+        },
+        {
+            "slug": "intensificacion-academica",
+            "titulo": "Intensificación académica",
+            "resumen": "Reforzamos cada semana lo aprendido en el colegio y en la iglesia.",
+            "descripcion": "Reforzamos y complementamos cada semana los conocimientos adquiridos en el colegio y en la iglesia, con atención personalizada para mantener el interés de cada niño y niña.",
+            "color": "#2390FF",
+            "icono": "icon-fun",
+            "imagen": "assets/images/program/program-3-3.jpg",
+            "imagen_inicio": "assets/images/program/program-1-3.jpg",
+            "imagen_detalle": "assets/images/program/program-d-4.jpg"
+        },
+        {
+            "slug": "formacion-cultural",
+            "titulo": "Formación cultural",
+            "resumen": "Cultura, habilidades y talentos para cada niño y niña.",
+            "descripcion": "Desarrollamos en los niños y niñas el aprecio y el conocimiento de la cultura propia y foránea, y les damos elementos para fortalecer sus habilidades y talentos.",
+            "color": "#FFAA23",
+            "icono": "icon-charity",
+            "imagen": "assets/images/program/program-3-4.jpg",
+            "imagen_inicio": "assets/images/program/program-1-4.jpg",
+            "imagen_detalle": "assets/images/program/program-d-3.jpg"
+        },
+        {
+            "slug": "actividades-ludicas",
+            "titulo": "Actividades lúdicas",
+            "resumen": "Juego, creatividad y alegría para el desarrollo de la niñez.",
+            "descripcion": "Ofrecemos espacios de juego y recreación para el normal desarrollo psicosocial de la niñez, con alegría, creatividad y trabajo en equipo.",
+            "color": "#26A6A1",
+            "icono": "icon-art-studies",
+            "imagen": "assets/images/program/program-3-5.jpg",
+            "imagen_inicio": "",
+            "imagen_detalle": "assets/images/program/program-d-1.jpg"
+        },
+        {
+            "slug": "interaccion-con-los-padres",
+            "titulo": "Interacción con los padres",
+            "resumen": "Espacios de encuentro para fortalecer a toda la familia.",
+            "descripcion": "Colaboramos con los padres de familia en la formación de sus hijos e hijas, con espacios de encuentro e interacción que fortalecen a toda la familia.",
+            "color": "#5F7999",
+            "icono": "icon-discipline",
+            "imagen": "assets/images/program/program-3-6.jpg",
+            "imagen_inicio": "",
+            "imagen_detalle": "assets/images/program/program-d-2.jpg"
+        }
+    ],
+
+    "preguntas_programa": [
+        {"pregunta": "¿Qué trabajamos en este programa?",
+         "respuesta": "Reforzamos y complementamos lo aprendido con actividades semanales, atención personalizada y el acompañamiento de un equipo comprometido."},
+        {"pregunta": "¿Cómo participan las familias?",
+         "respuesta": "Las familias participan en las actividades y colaboran con nosotros en la formación de sus hijos e hijas."},
+        {"pregunta": "¿Quiénes pueden participar?",
+         "respuesta": "Pueden participar niños y niñas de comunidades vulnerables. Escríbenos y te contamos cómo vincularte."},
+        {"pregunta": "¿Cómo puedo inscribir a mi hijo o hija?",
+         "respuesta": "Escríbenos desde la página de contacto, al correo contacto@fundacionbeitshalom.org o al +57 44128293 y con gusto te orientamos."}
+    ],
+
+    "equipo": [
+        {"nombre": "Néstor Castillo", "cargo": "Pastor de niños", "imagen": "assets/images/team/team-1-1.jpg", "color": "#26A6A1"},
+        {"nombre": "Inés Castillo", "cargo": "Pastora de niños", "imagen": "assets/images/team/team-1-2.jpg", "color": "#FFAA23"},
+        {"nombre": "Equipo de voluntarios", "cargo": "Servicio y acompañamiento", "imagen": "assets/images/team/team-1-3.jpg", "color": "#75C137"}
+    ],
+
+    "testimonios": [
+        {"texto": "Ver a mi hijo descubrir sus talentos cada semana, rodeado de valores y de personas que lo quieren, ha sido una bendición para toda nuestra familia.",
+         "autor": "Familia participante", "rol": "Padre de familia", "imagen": "assets/images/resources/testi-author-1.png"},
+        {"texto": "En la fundación encontramos un espacio donde nuestra hija aprende, juega y crece. Nos sentimos acompañados en la formación de nuestros hijos.",
+         "autor": "Familia participante", "rol": "Madre de familia", "imagen": "assets/images/resources/testi-author-2.png"}
+    ],
+
+    "eventos": [
+        {
+            "slug": "jornada-de-integracion-con-las-familias",
+            "titulo": "Compartiendo con las familias: jornada de integración",
+            "categoria": "Interacción con los padres",
+            "fecha": "2026-11-21",
+            "horario": "08:00 am - 12:00 m",
+            "imagen": "assets/images/resources/event-1-3.jpg",
+            "imagen_detalle": "assets/images/program/program-d-2.jpg",
+            "color": "#F25334",
+            "resumen": "Una mañana para que padres, madres, niños y niñas compartan actividades y fortalezcan sus lazos.",
+            "descripcion": [
+                "Colaboramos con los padres de familia en la formación de sus hijos como personas con criterios de verdad, justicia y responsabilidad. En esta jornada las familias participan en dinámicas, juegos y momentos de reflexión junto a sus hijos e hijas.",
+                "Es también un espacio para conocer al equipo de la fundación y resolver dudas sobre nuestros programas."
+            ],
+            "requisitos": [
+                "Asistir en compañía de un adulto responsable.",
+                "Confirmar la asistencia por correo o teléfono.",
+                "Llevar ropa cómoda para las actividades al aire libre."
+            ]
+        },
+        {
+            "slug": "celebrando-los-talentos-de-nuestros-ninos",
+            "titulo": "Celebrando los talentos de nuestros niños",
+            "categoria": "Formación cultural",
+            "fecha": "2026-11-28",
+            "horario": "02:00 pm - 05:00 pm",
+            "imagen": "assets/images/resources/event-1-4.jpg",
+            "imagen_detalle": "assets/images/program/program-d-3.jpg",
+            "color": "#2390FF",
+            "resumen": "Una muestra de música, arte y expresión preparada por los niños y niñas de la fundación.",
+            "descripcion": [
+                "Los niños y niñas presentan lo que han aprendido durante el año: canciones, dibujos, dramatizaciones y otros talentos que han descubierto en nuestros programas.",
+                "Invitamos a familias, voluntarios y amigos de la fundación a acompañarlos y celebrar sus logros."
+            ],
+            "requisitos": [
+                "Entrada libre para familias y voluntarios.",
+                "Llegar 15 minutos antes del inicio.",
+                "Respetar las indicaciones del equipo durante la presentación."
+            ]
+        },
+        {
+            "slug": "jornada-de-bienvenida-a-las-familias",
+            "titulo": "Jornada de bienvenida a las familias",
+            "categoria": "Formación humana y de valores",
+            "fecha": "2026-12-05",
+            "horario": "09:00 am - 12:00 m",
+            "imagen": "assets/images/resources/event-1-5.jpg",
+            "imagen_detalle": "assets/images/program/program-d-5.jpg",
+            "color": "#75C137",
+            "resumen": "Recibimos a las familias que se integran a la fundación y les presentamos cómo trabajamos.",
+            "descripcion": [
+                "En la Fundación Internacional Beit Shalom acompañamos a niños y niñas de comunidades vulnerables para que descubran y potencien sus talentos y alcancen metas de superación.",
+                "Durante la bienvenida explicamos los programas, los horarios y la forma en que las familias participan en la formación de sus hijos e hijas."
+            ],
+            "requisitos": [
+                "Dirigido a familias nuevas o interesadas.",
+                "Inscripción previa por la página de contacto.",
+                "Asistir con los niños y niñas que participarán."
+            ]
+        },
+        {
+            "slug": "tarde-de-talentos-y-valores",
+            "titulo": "Tarde de talentos y valores",
+            "categoria": "Actividades lúdicas",
+            "fecha": "2026-12-12",
+            "horario": "02:00 pm - 05:00 pm",
+            "imagen": "assets/images/resources/event-1-6.jpg",
+            "imagen_detalle": "assets/images/program/program-d-1.jpg",
+            "color": "#FFAA23",
+            "resumen": "Juegos, creatividad y alegría para cerrar el año formando en valores.",
+            "descripcion": [
+                "Promovemos valores como la honestidad, el respeto, la solidaridad, la gratitud y la alegría en cada una de nuestras actividades.",
+                "Esta tarde reúne juegos en equipo, retos creativos y un momento especial de gratitud por todo lo vivido durante el año."
+            ],
+            "requisitos": [
+                "Para niños y niñas de los programas de la fundación.",
+                "Autorización firmada por un adulto responsable.",
+                "Llevar hidratación y ropa cómoda."
+            ]
+        }
+    ],
+
+    "noticias": [
+        {
+            "slug": "jornada-de-formacion-en-valores",
+            "titulo": "Jornada de formación en valores con niños y niñas",
+            "categoria": "Formación en valores",
+            "fecha": "2026-09-30",
+            "autor": "Fundación Beit Shalom",
+            "cargo_autor": "Comunicaciones",
+            "imagen": "assets/images/blog/blog-1-1.png",
+            "imagen_detalle": "assets/images/blog/blog-l-1-1.jpg",
+            "color": "#F25334",
+            "etiquetas": ["Niñez", "Valores", "Familia"],
+            "parrafos": [
+                "Durante esta jornada los niños y niñas reflexionaron sobre la honestidad, el respeto y la gratitud a través de juegos, historias y trabajo en equipo.",
+                "Promovemos valores como la honestidad, el respeto, la solidaridad, la gratitud y la alegría en cada una de nuestras actividades, y acompañamos a las familias para que esos valores también se vivan en casa."
+            ]
+        },
+        {
+            "slug": "un-espacio-para-descubrir-talentos",
+            "titulo": "Un espacio para que cada niño y niña descubra y potencie sus talentos",
+            "categoria": "Formación cultural",
+            "fecha": "2026-09-28",
+            "autor": "Fundación Beit Shalom",
+            "cargo_autor": "Comunicaciones",
+            "imagen": "assets/images/blog/blog-1-2.png",
+            "imagen_detalle": "assets/images/blog/blog-l-1-2.jpg",
+            "color": "#75C137",
+            "etiquetas": ["Talentos", "Cultura", "Niñez"],
+            "parrafos": [
+                "Cada niño y niña tiene talentos únicos. En nuestros espacios de formación cultural los ayudamos a descubrirlos mediante la música, el arte y la expresión.",
+                "Desarrollamos el aprecio por la cultura propia y foránea, y damos elementos para fortalecer habilidades que los acompañarán toda la vida."
+            ]
+        },
+        {
+            "slug": "formacion-valores-y-alegria",
+            "titulo": "Formación, valores y alegría para la niñez y sus familias",
+            "categoria": "Interacción con los padres",
+            "fecha": "2026-09-26",
+            "autor": "Inés Castillo",
+            "cargo_autor": "Pastora de niños",
+            "imagen": "assets/images/blog/blog-1-3.png",
+            "imagen_detalle": "assets/images/blog/blog-l-1-3.jpg",
+            "color": "#2390FF",
+            "etiquetas": ["Familia", "Valores", "Comunidad"],
+            "parrafos": [
+                "Colaboramos con los padres de familia en la formación de sus hijos como personas con criterios de verdad, justicia y responsabilidad.",
+                "Los encuentros con las familias nos permiten acompañar de cerca el crecimiento de cada niño y niña y fortalecer a toda la comunidad."
+            ]
+        },
+        {
+            "slug": "intensificacion-academica-cada-semana",
+            "titulo": "Un espacio donde cada niño y niña refuerza lo aprendido",
+            "categoria": "Intensificación académica",
+            "fecha": "2026-09-22",
+            "autor": "Fundación Beit Shalom",
+            "cargo_autor": "Comunicaciones",
+            "imagen": "assets/images/blog/blog-1-4.png",
+            "imagen_detalle": "assets/images/program/program-d-4.jpg",
+            "color": "#FFAA23",
+            "etiquetas": ["Estudio", "Talentos", "Niñez"],
+            "parrafos": [
+                "Reforzamos cada semana los conocimientos del colegio y de la iglesia, con atención personalizada para mantener el interés de cada niño y niña.",
+                "Trabajamos en grupos reducidos para acompañar de cerca los avances y celebrar cada logro."
+            ]
+        },
+        {
+            "slug": "familias-y-voluntarios-unidos",
+            "titulo": "Familias y voluntarios unidos por la niñez",
+            "categoria": "Voluntariado",
+            "fecha": "2026-09-18",
+            "autor": "Fundación Beit Shalom",
+            "cargo_autor": "Comunicaciones",
+            "imagen": "assets/images/blog/blog-1-5.png",
+            "imagen_detalle": "assets/images/program/program-d-2.jpg",
+            "color": "#26A6A1",
+            "etiquetas": ["Voluntariado", "Comunidad", "Familia"],
+            "parrafos": [
+                "El trabajo de la fundación es posible gracias a las familias y a las personas voluntarias que regalan su tiempo y sus talentos.",
+                "Si quieres sumarte, registra tus datos en «Quiero colaborar» y cuéntanos cómo te gustaría ayudar."
+            ]
+        },
+        {
+            "slug": "valores-y-fe-para-un-mejor-futuro",
+            "titulo": "Valores y fe para construir un mejor futuro",
+            "categoria": "Formación ética y religiosa",
+            "fecha": "2026-09-14",
+            "autor": "Néstor Castillo",
+            "cargo_autor": "Pastor de niños",
+            "imagen": "assets/images/blog/blog-1-6.png",
+            "imagen_detalle": "assets/images/program/program-d-6.jpg",
+            "color": "#5F7999",
+            "etiquetas": ["Fe", "Valores", "Niñez"],
+            "parrafos": [
+                "Instruimos a niños y niñas en la fe cristiana para que comprendan la Palabra de Dios y vivan el testimonio y el compromiso de justicia social.",
+                "Creemos que una formación con valores y propósito transforma la vida de cada niño, de su familia y de su comunidad."
+            ]
+        }
+    ],
+
+    "galeria": [
+        {"imagen": "assets/images/gallery/gallery-1-1.jpg", "descripcion": "Actividades con los niños y niñas de la fundación"},
+        {"imagen": "assets/images/gallery/gallery-1-2.jpg", "descripcion": "Jornada de formación en valores"},
+        {"imagen": "assets/images/gallery/gallery-1-3.jpg", "descripcion": "Encuentro con las familias"},
+        {"imagen": "assets/images/gallery/gallery-1-4.jpg", "descripcion": "Actividades lúdicas al aire libre"},
+        {"imagen": "assets/images/gallery/gallery-1-5.jpg", "descripcion": "Intensificación académica"},
+        {"imagen": "assets/images/gallery/gallery-1-6.jpg", "descripcion": "Formación cultural"},
+        {"imagen": "assets/images/gallery/gallery-1-7.jpg", "descripcion": "Equipo de voluntarios"},
+        {"imagen": "assets/images/gallery/gallery-1-8.jpg", "descripcion": "Celebración de talentos"},
+        {"imagen": "assets/images/gallery/gallery-1-9.jpg", "descripcion": "Momentos en comunidad"}
+    ],
+
+    "preguntas_frecuentes": [
+        {"pregunta": "¿Qué es la Fundación Internacional Beit Shalom?",
+         "respuesta": "Somos una fundación sin ánimo de lucro que acompaña a niños y niñas de comunidades vulnerables para que descubran y potencien sus talentos y alcancen metas de superación."},
+        {"pregunta": "¿A quiénes va dirigido el trabajo de la fundación?",
+         "respuesta": "A niños y niñas de comunidades vulnerables y a sus familias. Colaboramos con los padres en la formación de sus hijos como personas con criterios de verdad, justicia y responsabilidad."},
+        {"pregunta": "¿Qué actividades realizan con los niños y niñas?",
+         "respuesta": "Trabajamos en seis ejes: formación ética y religiosa, formación humana y de valores, intensificación académica, formación cultural, actividades lúdicas e interacción con los padres."},
+        {"pregunta": "¿Qué valores promueve la fundación?",
+         "respuesta": "La honestidad, el respeto, la responsabilidad, la solidaridad, la gratitud, la generosidad y la alegría."},
+        {"pregunta": "¿Cómo refuerzan lo que aprenden en el colegio y en la iglesia?",
+         "respuesta": "Cada semana reforzamos y complementamos esos conocimientos con atención personalizada, en grupos reducidos y con actividades que mantienen el interés de cada niño y niña."},
+        {"pregunta": "¿Cómo puedo ayudar a la fundación?",
+         "respuesta": "Puedes registrarte como colaborador en «Quiero colaborar», apoyar con una donación o escribirnos desde la página de contacto. Toda ayuda suma."},
+        {"pregunta": "¿Qué pasa después de enviar mi solicitud como colaborador?",
+         "respuesta": "Nuestro equipo revisa cada solicitud y te escribe al correo que registraste para contarte el resultado y los siguientes pasos."},
+        {"pregunta": "¿Registrarme como colaborador me autoriza a trabajar con niños?",
+         "respuesta": "No. La inscripción como colaborador no constituye una autorización para trabajar directamente con niños. Cualquier participación en actividades con menores requiere un proceso de verificación independiente."}
+    ],
+
+    "formas_apoyo": [
+        {"titulo": "Voluntariado", "periodo": "Con tu tiempo", "precio": "Sin costo", "color": "#F25334",
+         "icono": "icon-crawling-baby-silhouette",
+         "beneficios": ["Acompaña actividades con los niños", "Comparte tu profesión o talento", "Modalidad presencial o virtual", "Acompañamiento del equipo"],
+         "boton": "Quiero ser voluntario", "destino": "colaborador.registrar", "asunto": ""},
+        {"titulo": "Apadrina un talento", "periodo": "Cada mes", "precio": "$20", "color": "#2390FF",
+         "icono": "icon-playtime",
+         "beneficios": ["Apoya la formación de un niño o niña", "Material de formación", "Acompañamiento personalizado", "Informe de impacto semestral"],
+         "boton": "Quiero apadrinar", "destino": "sitio.contacto", "asunto": "donacion"},
+        {"titulo": "Aliado Beit Shalom", "periodo": "Cada mes", "precio": "$30", "color": "#75C137",
+         "icono": "icon-charity",
+         "beneficios": ["Apoya todos los programas", "Material de formación", "Acompañamiento personalizado", "Informe de impacto semestral"],
+         "boton": "Quiero ser aliado", "destino": "sitio.contacto", "asunto": "donacion"}
+    ]
+}

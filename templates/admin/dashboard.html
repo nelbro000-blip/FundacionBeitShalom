@@ -1,0 +1,106 @@
+{% extends "admin/base_admin.html" %}
+{% from "admin/macros.html" import estado_badge, grafico_barras, grafico_columnas %}
+
+{% block titulo %}Dashboard · Panel administrativo{% endblock %}
+
+{% block contenido_admin %}
+{% set e = estadisticas %}
+{% set titulos_estado = {"Pendiente": "Pendientes", "En revisión": "En revisión", "Aprobado": "Aprobadas", "Rechazado": "Rechazadas"} %}
+
+<div class="encabezado-pagina">
+    <div>
+        <h1>Dashboard</h1>
+        <p class="subtitulo">Resumen de las solicitudes del programa de colaboradores.</p>
+    </div>
+    <div class="acciones">
+        <a class="boton boton-secundario" href="{{ url_for('admin.exportar') }}">Exportar a Excel</a>
+        <a class="boton" href="{{ url_for('admin.listado') }}">Ver colaboradores</a>
+    </div>
+</div>
+
+{% if mensajes_sin_leer %}
+<div class="alerta alerta-aviso aviso-mensajes" role="status">
+    Tienes <strong>{{ mensajes_sin_leer }}</strong>
+    {{ "mensaje" if mensajes_sin_leer == 1 else "mensajes" }} de contacto sin leer.
+    <a href="{{ url_for('admin.mensajes', filtro='no-leidos') }}">Ver mensajes →</a>
+</div>
+{% endif %}
+
+<section class="kpis" aria-label="Indicadores principales">
+
+    <article class="kpi kpi-principal">
+        <p class="kpi-etiqueta">Total de solicitudes</p>
+        <p class="kpi-valor">{{ e.total }}</p>
+        <p class="kpi-detalle">{{ e.ultimos_7_dias }} nuevas en los últimos 7 días</p>
+    </article>
+
+    {% for estado, cantidad in e.por_estado.items() %}
+    <a class="kpi" href="{{ url_for('admin.listado', estado=estado) }}">
+        <p class="kpi-etiqueta">
+            <span class="estado-punto punto-{{ estado | clase_estado }}" aria-hidden="true"></span>
+            {{ titulos_estado[estado] }}
+        </p>
+        <p class="kpi-valor">{{ cantidad }}</p>
+        <p class="kpi-detalle">{{ cantidad | porcentaje(e.total) }}% del total</p>
+    </a>
+    {% endfor %}
+
+</section>
+
+<div class="graficos">
+
+    {{ grafico_barras("areas", "Solicitudes por área de colaboración", e.por_area, e.total,
+                      "Cada persona puede elegir varias áreas.", "Área") }}
+
+    {{ grafico_columnas("meses", "Registros por mes", e.por_mes, e.total, "Últimos 6 meses.") }}
+
+    {{ grafico_barras("paises", "Países con más solicitudes", e.por_pais, e.total, "", "País") }}
+
+    <div class="graficos-apilados">
+        {{ grafico_barras("modalidad", "Modalidad", e.por_modalidad, e.total, "", "Modalidad") }}
+        {{ grafico_barras("disponibilidad", "Disponibilidad", e.por_disponibilidad, e.total, "", "Disponibilidad") }}
+    </div>
+
+</div>
+
+<section class="tarjeta">
+
+    <div class="tarjeta-encabezado">
+        <h2>Solicitudes recientes</h2>
+        <a href="{{ url_for('admin.listado') }}">Ver todas →</a>
+    </div>
+
+    {% if e.recientes %}
+    <div class="tabla-contenedor">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">País</th>
+                    <th scope="col">Modalidad</th>
+                    <th scope="col">Registro</th>
+                    <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for colaborador in e.recientes %}
+                <tr>
+                    <td><a class="enlace-nombre" href="{{ url_for('admin.detalle', id_colaborador=colaborador.id) }}">{{ colaborador.nombre }}</a></td>
+                    <td>{{ colaborador.pais }}</td>
+                    <td>{{ colaborador.modalidad }}</td>
+                    <td class="numero-celda">{{ colaborador.fecha_registro | fecha }}</td>
+                    <td>{{ estado_badge(colaborador.estado) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="vacio">Aún no hay solicitudes registradas.</p>
+    {% endif %}
+
+</section>
+
+<div class="tooltip" id="tooltipGrafico" role="tooltip" hidden></div>
+
+{% endblock %}

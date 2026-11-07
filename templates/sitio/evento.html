@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import estatico, encabezado_pagina with context %}
+
+{% block titulo %}{{ evento.titulo }}{% endblock %}
+{% block descripcion %}{{ evento.resumen }}{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Detalle del evento", [("Eventos", url_for('sitio.eventos'))]) }}
+
+<section class="events-details">
+    <div class="container">
+        <div class="row gutter-y-60">
+            <div class="col-md-12 col-lg-8">
+                <div class="events-details__image">
+                    <img src="{{ estatico(evento.imagen_detalle) }}" alt="{{ evento.titulo }}">
+                </div>
+                <div class="events-details__categories">
+                    <span>{{ evento.categoria }}</span>
+                </div>
+                <h2 class="events-details__title">{{ evento.titulo }}</h2>
+                <p class="events-details__text events-details__text--destacado">{{ evento.resumen }}</p>
+                {% for parrafo in evento.descripcion %}
+                <p class="events-details__text">{{ parrafo }}</p>
+                {% endfor %}
+                <h3 class="events-details__title">Requisitos del evento</h3>
+                <ul class="list-unstyled events-details__lists">
+                    {% for requisito in evento.requisitos %}
+                    <li><span class="fa fa-check-circle"></span>{{ requisito }}</li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ url_for('sitio.contacto', asunto='informacion') }}#formulario-contacto" class="kidearn-btn kidearn-btn--xl">
+                    <span>Quiero asistir</span>
+                </a>
+            </div>
+            <div class="col-md-12 col-lg-4 wow fadeInUp" data-wow-duration="1500ms">
+                <div class="events-details__info">
+                    <h3 class="events-details__info__title">Información del evento</h3>
+                    <ul class="list-unstyled events-details__info__list">
+                        <li>
+                            <div class="events-details__info__list__name">Fecha:</div>
+                            <div class="events-details__info__list__text">{{ evento.fecha_texto }}</div>
+                        </li>
+                        <li>
+                            <div class="events-details__info__list__name">Horario:</div>
+                            <div class="events-details__info__list__text">{{ evento.horario }}</div>
+                        </li>
+                        <li>
+                            <div class="events-details__info__list__name">Lugar:</div>
+                            <div class="events-details__info__list__text">{{ fundacion.direccion }}</div>
+                        </li>
+                        <li>
+                            <div class="events-details__info__list__name">Teléfono:</div>
+                            <div class="events-details__info__list__text"><a href="tel:{{ fundacion.telefono_enlace }}">{{ fundacion.telefono }}</a></div>
+                        </li>
+                        <li>
+                            <div class="events-details__info__list__name">Correo:</div>
+                            <div class="events-details__info__list__text"><a href="mailto:{{ fundacion.correo }}">{{ fundacion.correo }}</a></div>
+                        </li>
+                        <li>
+                            <div class="events-details__social">
+                                {% for red in fundacion.redes %}
+                                <a href="{{ red.url }}" target="_blank" rel="noopener">
+                                    <i class="{{ red.icono }}" aria-hidden="true"></i>
+                                    <span class="sr-only">{{ red.nombre }}</span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li>
+                            <div class="events-details__map">
+                                <div class="google-map">
+                                    <iframe title="Mapa: {{ fundacion.direccion }}" src="{{ fundacion.mapa }}" loading="lazy" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

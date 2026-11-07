@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import estatico, encabezado_pagina, titulo_seccion, tarjeta_noticia with context %}
+
+{% block titulo %}{{ noticia.titulo }}{% endblock %}
+{% block descripcion %}{{ noticia.parrafos[0] }}{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Detalle de la noticia", [("Noticias", url_for('sitio.noticias'))]) }}
+
+<section class="blog-one blog-one--page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <article class="blog-details">
+                    <div class="blog-card blog-card-two" style="--accent-color: {{ noticia.color }};">
+                        <div class="blog-card__image">
+                            <img src="{{ estatico(noticia.imagen_detalle) }}" alt="{{ noticia.titulo }}">
+                        </div>
+                        <div class="blog-card__content">
+                            <div class="blog-card__content__top">
+                                <span class="blog-card__category">{{ noticia.categoria }}</span>
+                                <div class="blog-card__date"><i class="icon-clock"></i> {{ noticia.fecha_texto }}</div>
+                            </div>
+                            <h2 class="blog-card__title">{{ noticia.titulo }}</h2>
+                            {% for parrafo in noticia.parrafos %}
+                            <p class="blog-card-two__text">{{ parrafo }}</p>
+                            {% endfor %}
+                            <p class="noticia-autor">Publicado por <strong>{{ noticia.autor }}</strong> · {{ noticia.cargo_autor }}</p>
+                        </div>
+                    </div>
+                    <div class="blog-details__meta">
+                        <div class="blog-details__tags">
+                            <h3 class="blog-details__tags__title">Etiquetas</h3>
+                            {% for etiqueta in noticia.etiquetas %}
+                            <span class="etiqueta-noticia">{{ etiqueta }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="blog-details__social">
+                            {% for red in fundacion.redes %}
+                            <a href="{{ red.url }}" target="_blank" rel="noopener">
+                                <i class="{{ red.icono }}" aria-hidden="true"></i>
+                                <span class="sr-only">{{ red.nombre }}</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if recientes %}
+<section class="blog-one otras-noticias">
+    <div class="container">
+        {{ titulo_seccion("Sigue leyendo", "Otras noticias de la fundación") }}
+        <div class="row gutter-y-30">
+            {% for otra in recientes %}
+            <div class="col-md-6 col-lg-4">{{ tarjeta_noticia(otra, loop.index0) }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

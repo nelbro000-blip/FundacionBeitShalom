@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import estatico, titulo_seccion, tarjeta_programa_inicio, seccion_equipo, seccion_testimonios, tarjeta_noticia with context %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block content %}
+
+<h1 class="sr-only">{{ fundacion.nombre }}</h1>
+
+<!-- Carrusel principal -->
+<section class="banner-one">
+    <div class="banner-one__carousel kidearn-owl__carousel owl-carousel kidearn-owl__carousel--with-shadow"
+         data-owl-options='{"loop": true, "animateOut": "fadeOut", "animateIn": "fadeInUp", "items": 1, "autoplay": true,
+         "autoplayTimeout": 7000, "smartSpeed": 1000, "nav": false, "dots": true, "margin": 0}'>
+        {% for diapositiva in diapositivas %}
+        <div class="item">
+            <div class="banner-one__item">
+                <div class="banner-one__bg" style="background-image: url({{ estatico(diapositiva.imagen) }});"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="banner-one__content">
+                                <div class="banner-one__shape2"></div>
+                                <div class="banner-one__shape3"></div>
+                                <div class="banner-one__shape4">
+                                    <img src="{{ estatico('assets/images/shapes/banner-1-shape-2.png') }}" alt="">
+                                </div>
+                                <div class="banner-one__shape5"><div class="banner-one__shape5-inner"></div></div>
+                                <div class="banner-one__shape6"><div class="banner-one__shape6-inner"></div></div>
+                                <div class="banner-one__content__bg"></div>
+                                <h2 class="banner-one__content__title">{{ diapositiva.titulo }}</h2>
+                                <a href="{{ url_for(diapositiva.destino) }}" class="kidearn-btn">
+                                    <span>{{ diapositiva.boton }}</span>
+                                </a>
+                                <div class="banner-one__shape1 kidearn-splax" style="background-image: url({{ estatico('assets/images/shapes/banner-1-shape-1.png') }});"
+                                     data-para-options='{"orientation": "down", "scale": 1.9, "overflow": true}'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Pilares -->
+<section class="service-one">
+    <div class="service-one__shape kidearn-splax" style="background-image: url({{ estatico('assets/images/shapes/about-bg-shape-1.png') }});"
+         data-para-options='{"orientation": "left", "scale": 1.5, "overflow": true}'></div>
+    <div class="container">
+        <div class="row gutter-y-30">
+            {% for pilar in pilares %}
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="{{ loop.index * 100 }}ms">
+                <div class="service-one__item {{ 'service-one__item--order' if loop.index is even }}" style="--accent-color: {{ pilar.color }};">
+                    <div class="service-one__item__image-wrapper">
+                        <div class="service-one__item__image kidearn-tilt" data-tilt-options='{ "glare": false, "maxGlare": 0, "maxTilt": 7, "speed": 700, "scale": 1 }'>
+                            <img src="{{ estatico(pilar.imagen) }}" alt="{{ pilar.titulo }}">
+                        </div>
+                        <div class="service-one__item__ball"></div>
+                    </div>
+                    <h4 class="service-one__item__title">{{ pilar.titulo }}</h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Quiénes somos -->
+<section class="about-one">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 wow fadeInLeft" data-wow-delay="200ms">
+                <div class="about-one__content">
+                    {{ titulo_seccion("Quiénes somos", "Nuestra pasión es la niñez, y trabajamos por su futuro", "text-left") }}
+                    <p class="about-one__content__text">{{ fundacion.quienes_somos }}</p>
+                    <a href="{{ url_for('sitio.nosotros') }}" class="kidearn-btn"><span>Conoce más</span></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-one__image">
+                    <div class="about-one__image__one kidearn-tilt" data-tilt-options='{ "glare": false, "maxGlare": 0, "maxTilt": 5, "speed": 700, "scale": 1 }'>
+                        <img src="{{ estatico('assets/images/resources/about-1-1.jpg') }}" alt="Niños y niñas en una actividad de la fundación">
+                    </div>
+                    <div class="about-one__image__border wow fadeInUp" data-wow-delay="200ms">
+                        <img src="{{ estatico('assets/images/shapes/about-1-border.jpg') }}" alt="">
+                    </div>
+                    <div class="about-one__image__leaf kidearn-splax" data-para-options='{"orientation": "left", "scale": 1.5, "overflow": true}'>
+                        <img src="{{ estatico('assets/images/shapes/about-1-leaf.png') }}" alt="">
+                    </div>
+                    <div class="about-one__image__ball wow fadeInUp" data-wow-delay="100ms"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ seccion_testimonios(testimonios) }}
+
+<!-- Video -->
+<section class="video-one">
+    <div class="video-one__bg"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 d-flex align-items-center">
+                <div class="video-one__content">
+                    <h3 class="video-one__content__title">Conoce nuestras actividades en imágenes</h3>
+                    <a href="{{ url_for('sitio.galeria') }}" class="kidearn-btn"><span>Ver la galería</span></a>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="video-one__btn-shape">
+                    <div class="video-one__btn">
+                        <img src="{{ estatico('assets/images/backgrounds/video-bg-1.jpg') }}" alt="Actividades de la fundación">
+                        <a href="{{ fundacion.video }}" class="video-popup" aria-label="Reproducir el video de la fundación">
+                            <i class="fa fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Programas -->
+<section class="program-one">
+    <div class="program-one__bg kidearn-splax" data-para-options='{"orientation": "up", "scale": 2.5, "overflow": true}'>
+        <img src="{{ estatico('assets/images/shapes/program-bg-shape.png') }}" alt="">
+    </div>
+    <div class="container">
+        {{ titulo_seccion("Nuestros programas", "Acompañamos a cada niño y niña según sus talentos") }}
+        <div class="row">
+            {% for programa in programas %}
+            <div class="col-lg-3 col-md-6">{{ tarjeta_programa_inicio(programa, loop.index0) }}</div>
+            {% endfor %}
+        </div>
+        <div class="text-center seccion-boton">
+            <a href="{{ url_for('sitio.programas') }}" class="kidearn-btn"><span>Ver todos los programas</span></a>
+        </div>
+    </div>
+</section>
+
+{{ seccion_equipo(equipo) }}
+
+<!-- Invitación a colaborar (reemplaza el boletín de la plantilla) -->
+<section class="mail-one">
+    <div class="mail-one__bg-shape" style="background-image: url({{ estatico('assets/images/shapes/mail-shape-1.png') }});"></div>
+    <div class="container">
+        <div class="mail-one__area">
+            <div class="mail-one__bg"></div>
+            <div class="mail-one__content">
+                <h3 class="mail-one__title">¿Quieres ser parte de<br> nuestro equipo de colaboradores?</h3>
+                <p class="mail-one__texto">Regístrate en pocos minutos y cuéntanos cómo te gustaría ayudar.</p>
+                <a href="{{ url_for('colaborador.registrar') }}" class="kidearn-btn"><span>Quiero colaborar</span></a>
+            </div>
+            <div class="mail-one__shape kidearn-splax" data-para-options='{"orientation": "up", "scale": 1.5, "delay": ".6", "transition": "cubic-bezier(0,0,0,1)", "overflow": true}'>
+                <img src="{{ estatico('assets/images/shapes/mail-shape-3.png') }}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Noticias -->
+<section class="blog-one">
+    <div class="container">
+        {{ titulo_seccion("Noticias y actividades", "Conoce nuestras últimas noticias y actividades") }}
+        <div class="row gutter-y-30">
+            {% for noticia in noticias %}
+            <div class="col-md-6 col-lg-4">{{ tarjeta_noticia(noticia, loop.index0) }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

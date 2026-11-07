@@ -1,0 +1,265 @@
+{# =====================================================================
+   Macros del sitio: piezas de la plantilla Kidearn que se repiten en
+   varias páginas. Cada macro recibe un objeto del modelo (Programa,
+   MiembroEquipo, Noticia, Evento...) y dibuja su tarjeta.
+   ===================================================================== #}
+
+{# Imagen dentro de /static #}
+{% macro estatico(ruta) -%}{{ url_for('static', filename=ruta) }}{%- endmacro %}
+
+
+{# Encabezado de las páginas internas con migas de pan #}
+{% macro encabezado_pagina(titulo, migas=[]) %}
+<section class="page-header">
+    <div class="page-header__bg"></div>
+    <div class="container">
+        <h1 class="page-header__title">{{ titulo }}</h1>
+        <ul class="kidearn-breadcrumb list-unstyled">
+            <li><a href="{{ url_for('sitio.inicio') }}">Inicio</a></li>
+            {% for nombre, enlace in migas %}
+            <li><a href="{{ enlace }}">{{ nombre }}</a></li>
+            {% endfor %}
+            <li><span>{{ titulo }}</span></li>
+        </ul>
+    </div>
+</section>
+{% endmacro %}
+
+
+{# Título de sección (subtítulo manuscrito + título) #}
+{% macro titulo_seccion(etiqueta, titulo, alineacion="text-center") %}
+<div class="sec-title {{ alineacion }}">
+    <h6 class="sec-title__tagline">{{ etiqueta }}</h6>
+    <h3 class="sec-title__title">{{ titulo }}</h3>
+</div>
+{% endmacro %}
+
+
+{# Tarjeta de programa del inicio (estilo program-one) #}
+{% macro tarjeta_programa_inicio(programa, indice=0) %}
+<div class="program-one__item {{ 'program-one__item--order' if indice is odd }} wow fadeInUp"
+     data-wow-duration="1500ms" data-wow-delay="{{ indice * 100 }}ms" style="--accent-color: {{ programa.color }};">
+    <div class="program-one__item__shape">
+        <svg class="program-one__item__shape-one" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 43"><path d="M11.0817 6.98831C-9.7901 23.3302 2.35379 52.1177 18.5511 39.5735C34.7647 27.0458 39.1287 -14.9434 11.0817 6.98831Z"/></svg>
+        <svg class="program-one__item__shape-two" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 21"><path d="M5.28824 3.20713C-4.67276 11.0063 1.12287 24.745 8.85298 18.7583C16.5909 12.7795 18.6736 -7.25972 5.28824 3.20713Z"/></svg>
+    </div>
+    <div class="program-one__item__bg"></div>
+    <div class="program-one__item__image">
+        <img src="{{ estatico(programa.imagen_inicio) }}" alt="{{ programa.titulo }}">
+    </div>
+    <div class="program-one__item__content">
+        <h3 class="program-one__item__title"><a href="{{ url_for('sitio.programa', slug=programa.slug) }}">{{ programa.titulo }}</a></h3>
+        <div class="program-one__item__age">Niños y niñas</div>
+        <p class="program-one__item__text">{{ programa.resumen }}</p>
+        <a class="program-one__item__rm" href="{{ url_for('sitio.programa', slug=programa.slug) }}" aria-label="Ver {{ programa.titulo }}"><span class="icon-right-arrow"></span></a>
+    </div>
+</div>
+{% endmacro %}
+
+
+{# Tarjeta de programa del listado (estilo program-three) #}
+{% macro tarjeta_programa(programa, indice=0) %}
+<div class="program-three__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="{{ (indice % 3) * 100 }}ms"
+     style="--accent-color: {{ programa.color }};">
+    <div class="program-three__item__image">
+        <img src="{{ estatico(programa.imagen) }}" alt="{{ programa.titulo }}">
+    </div>
+    <div class="program-three__item__content">
+        <div class="program-three__item__icon"><span class="{{ programa.icono }}"></span></div>
+        <h3 class="program-three__item__title"><a href="{{ url_for('sitio.programa', slug=programa.slug) }}">{{ programa.titulo }}</a></h3>
+        <div class="program-three__item__age">Niños y niñas</div>
+        <p class="program-three__item__text">{{ programa.resumen }}</p>
+        <a class="program-three__item__rm" href="{{ url_for('sitio.programa', slug=programa.slug) }}" aria-label="Ver {{ programa.titulo }}"><span class="icon-right-arrow"></span></a>
+    </div>
+</div>
+{% endmacro %}
+
+
+{# Tarjeta de una persona del equipo #}
+{% macro tarjeta_miembro(miembro, indice=0) %}
+<div class="team-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="{{ indice * 100 }}ms" style="--accent-color: {{ miembro.color }};">
+    <div class="team-card__svg-top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 207 157" fill="currentColor"><path d="M0.255249 1.69657C0.907365 0.855618 12.3312 0.403216 29.5368 0.426383C46.7158 0.513133 69.6055 1.28915 92.43 3.86789C115.129 6.52265 136.887 11.9096 152.332 18.8871C156.063 20.7291 160.018 22.2178 163.085 24.0834C166.027 26.0249 168.807 27.8183 171.326 29.4759C172.586 30.3047 173.783 31.1053 174.907 31.8548C175.906 32.6803 176.753 33.513 177.573 34.2768C179.212 35.8045 180.617 37.1329 181.716 38.2108C182.815 39.2886 184.157 40.5888 185.634 42.1007C187.067 43.6303 188.151 45.5893 189.621 47.6079C191.002 49.662 192.509 51.9048 194.115 54.2677C195.766 56.6128 196.54 59.4901 197.896 62.2698C199.074 65.1203 200.421 68.0095 201.537 71.0967C202.284 74.3024 203.059 77.5769 203.852 80.8974C205.752 87.4145 205.994 94.5861 206.495 101.496C207.754 129.351 201.165 155.955 198.932 156.465C195.811 157.22 197.496 131.837 192.769 105.828C191.373 99.4039 190.414 92.6477 187.897 86.6661C186.845 83.6072 185.802 80.5712 184.786 77.6041C183.331 74.8368 181.903 72.1384 180.52 69.5546C179.048 67.0063 178.105 64.3551 176.347 62.2643C174.679 60.1381 173.145 58.0913 171.694 56.2509C170.197 54.4283 169.113 52.6017 167.699 51.2504C166.276 49.8762 164.988 48.7137 163.971 47.7099C162.953 46.7061 161.692 45.48 160.232 44.014C159.485 43.3013 158.755 42.5021 157.872 41.71C156.864 40.994 155.794 40.2498 154.696 39.4367C152.464 37.8513 150.061 36.0947 147.461 34.2305C144.815 32.3841 141.282 30.9144 138.018 29.0738C124.431 22.0789 105.04 16.1286 84.1235 12.4784C63.162 8.84582 41.6318 6.79042 25.7309 5.21776C9.8033 3.70869 -0.387809 2.56047 0.255249 1.69657Z"/></svg>
+    </div>
+    <div class="team-card__svg-middle">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 217 98" fill="currentColor"><path d="M203.517 22.6552C120.489 128.266 3.54803 91.1587 2.29153 90.7596C0.667608 90.2287 -0.200435 88.4866 0.330195 86.8628C0.860825 85.2391 2.60286 84.3715 4.22678 84.9025C5.48328 85.3016 130.102 124.677 210.694 2.04102C211.597 0.592506 213.532 0.229286 214.961 1.15706C216.391 2.08483 216.774 3.99488 215.846 5.42433C211.856 11.5493 207.731 17.2946 203.517 22.6552Z"/></svg>
+    </div>
+    <div class="team-card__image kidearn-tilt" data-tilt-options='{ "glare": false, "maxGlare": 0, "maxTilt": 5, "speed": 700, "scale": 1 }'>
+        <img src="{{ estatico(miembro.imagen) }}" alt="{{ miembro.nombre }}">
+    </div>
+    <div class="team-card__content">
+        <h3 class="team-card__title">{{ miembro.nombre }}</h3>
+        <p class="team-card__designation">{{ miembro.cargo }}</p>
+    </div>
+</div>
+{% endmacro %}
+
+
+{# Carrusel del equipo (inicio, nosotros y detalle de programa) #}
+{% macro seccion_equipo(equipo) %}
+<section class="team-one">
+    <div class="container">
+        {{ titulo_seccion("Nuestro equipo", "Conoce a quienes acompañan a los niños") }}
+        <div class="row gutter-y-30 justify-content-center">
+            {% for miembro in equipo %}
+            <div class="col-lg-4 col-md-6">{{ tarjeta_miembro(miembro, loop.index0) }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endmacro %}
+
+
+{# Tarjeta de noticia #}
+{% macro tarjeta_noticia(noticia, indice=0) %}
+{% set enlace = url_for('sitio.noticia', slug=noticia.slug) %}
+{% set imagen = estatico(noticia.imagen) %}
+<div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="{{ (indice % 3) * 100 }}ms" style="--accent-color: {{ noticia.color }};">
+    <div class="blog-card__image">
+        <img src="{{ imagen }}" alt="{{ noticia.titulo }}">
+        {% for capa in range(4) %}
+        <div class="blog-card__image__layer" style="background-image: url({{ imagen }});"></div>
+        {% endfor %}
+        <a href="{{ enlace }}" class="blog-card__image__link"><span class="sr-only">{{ noticia.titulo }}</span></a>
+    </div>
+    <div class="blog-card__content">
+        <div class="blog-card__content__top">
+            <span class="blog-card__category">{{ noticia.categoria }}</span>
+            <div class="blog-card__date">{{ noticia.fecha_texto }}</div>
+        </div>
+        <h3 class="blog-card__title"><a href="{{ enlace }}">{{ noticia.titulo }}</a></h3>
+        <div class="blog-card__content__bottom">
+            <div class="blog-card__author">
+                <div class="blog-card__author__image">
+                    <img src="{{ estatico('assets/images/blog/blog-author-1-1.jpg') }}" alt="">
+                </div>
+                <div class="blog-card__author__content">
+                    <h4 class="blog-card__author__name">{{ noticia.autor }}</h4>
+                    <p class="blog-card__author__designation">{{ noticia.cargo_autor }}</p>
+                </div>
+            </div>
+            <a href="{{ enlace }}" class="blog-card__link">
+                <span class="sr-only">Leer más sobre {{ noticia.titulo }}</span>
+                <i class="icon-right-arrow"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+
+{# Tarjeta de evento #}
+{% macro tarjeta_evento(evento) %}
+{% set enlace = url_for('sitio.evento', slug=evento.slug) %}
+<div class="event-card-two" style="--accent-color: {{ evento.color }};">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="event-card-two__image">
+                <img src="{{ estatico(evento.imagen) }}" alt="{{ evento.titulo }}">
+                <div class="event-card-two__date"><span class="event-card-two__date-left">{{ evento.dia }}</span>{{ evento.mes_anio }}</div>
+            </div>
+        </div>
+        <div class="col-md-7 d-flex align-items-center">
+            <div class="event-card-two__content">
+                <div class="event-card-two__cats"><span>{{ evento.categoria }}</span></div>
+                <ul class="event-card-two__lists">
+                    <li><span class="icon-clock1"></span>{{ evento.horario }}</li>
+                    <li><span class="icon-location-fill"></span>{{ fundacion.direccion }}</li>
+                </ul>
+                <h3 class="event-card-two__title"><a href="{{ enlace }}">{{ evento.titulo }}</a></h3>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+
+{# Acordeón de preguntas (la plantilla abre y cierra cada pregunta con JavaScript) #}
+{% macro acordeon(preguntas, clase="faq-page__accordion", colores=False) %}
+{% set paleta = ["#F25334", "#26A6A1", "#75C137", "#FFAA23", "#2390FF", "#5F7999"] %}
+<div class="{{ clase }} kidearn-accrodion" data-grp-name="kidearn-accrodion">
+    {% for item in preguntas %}
+    <div class="accrodion {{ 'active' if loop.first }}" {% if colores %}style="--accent-color: {{ paleta[loop.index0 % 6] }};"{% endif %}>
+        <div class="accrodion-title">
+            <h4>
+                {{ item.pregunta }}
+                <span class="accrodion-title__icon"></span>
+            </h4>
+        </div>
+        <div class="accrodion-content">
+            <div class="inner">
+                <p>{{ item.respuesta }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endmacro %}
+
+
+{# Llamado a la acción "Quiero colaborar" #}
+{% macro llamado_colaborar(titulo="¿Quieres apoyar el futuro de un niño o una niña?") %}
+<section class="cta-one cta-one--about-page">
+    <div class="container">
+        <div class="cta-one__inner">
+            <div class="cta-one__shape1 kidearn-splax" data-para-options='{"orientation": "right", "scale": 1.5, "delay": ".4", "transition": "cubic-bezier(0,0,0,1)", "overflow": true}'>
+                <img src="{{ estatico('assets/images/shapes/cta-shape-1.png') }}" alt="">
+            </div>
+            <div class="cta-one__shape2 kidearn-splax" data-para-options='{"orientation": "down", "scale": 1.5, "delay": ".4", "transition": "cubic-bezier(0,0,0,1)", "overflow": true}'>
+                <img src="{{ estatico('assets/images/shapes/cta-shape-2.png') }}" alt="">
+            </div>
+            <div class="row">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="100ms">
+                    <div class="cta-one__content">
+                        <h3 class="cta-one__title">{{ titulo }}</h3>
+                        <a href="{{ url_for('colaborador.registrar') }}" class="kidearn-btn"><span>Quiero colaborar</span></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="cta-one__one wow fadeInUp" data-wow-delay="300ms">
+                        <img src="{{ estatico('assets/images/resources/cta-1.png') }}" alt="Niños y niñas de la fundación">
+                        <div class="cta-one__one__text">Talentos<br> con futuro</div>
+                    </div>
+                    <div class="cta-one__thumb">
+                        <div class="cta-one__thumb__two"><img src="{{ estatico('assets/images/shapes/cta-2.png') }}" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endmacro %}
+
+
+{# Testimonios de las familias #}
+{% macro seccion_testimonios(testimonios, clase="") %}
+<section class="testimonial-one {{ clase }}">
+    <div class="container">
+        <div class="testimonial-one__area">
+            <div class="testimonial-one__bg"></div>
+            <div class="testimonial-one__bg-shape kidearn-splax" style="background-image: url({{ estatico('assets/images/shapes/testimonial-shape-1.png') }});"
+                 data-para-options='{"orientation": "down", "scale": 1.5, "delay": ".3", "transition": "cubic-bezier(0,0,0,1)", "overflow": true}'></div>
+            <div class="testimonial-one__star-left"><img src="{{ estatico('assets/images/shapes/star1.png') }}" alt=""></div>
+            <div class="testimonial-one__star-right"><img src="{{ estatico('assets/images/shapes/star2.png') }}" alt=""></div>
+            {{ titulo_seccion("Testimonios", "Las familias son parte de nuestra historia") }}
+            <div class="testimonial-one__carousel kidearn-owl__carousel owl-carousel owl-theme"
+                 data-owl-options='{"items": 1, "margin": 0, "loop": true, "smartSpeed": 700, "nav": true,
+                 "navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-right-arrow\"></span>"],
+                 "dots": false, "autoplay": false}'>
+                {% for testimonio in testimonios %}
+                <div class="item">
+                    <div class="testimonial-one__item">
+                        <div class="testimonial-one__item__quote">{{ testimonio.texto }}</div>
+                        <div class="testimonial-one__item__author">
+                            <img src="{{ estatico(testimonio.imagen) }}" alt="">
+                            <h5 class="testimonial-one__item__author__name">{{ testimonio.autor }}</h5>
+                            <p class="testimonial-one__item__author__designation">{{ testimonio.rol }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endmacro %}

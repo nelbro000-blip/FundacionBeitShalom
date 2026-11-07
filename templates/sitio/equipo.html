@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina, seccion_equipo, llamado_colaborar with context %}
+
+{% block titulo %}Nuestro equipo{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Nuestro equipo", [("Equipo y eventos", url_for('sitio.equipo'))]) }}
+
+{{ seccion_equipo(equipo) }}
+
+{{ llamado_colaborar("¿Quieres sumarte a nuestro equipo de voluntarios?") }}
+
+{% endblock %}

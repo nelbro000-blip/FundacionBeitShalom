@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina, tarjeta_programa, llamado_colaborar with context %}
+
+{% block titulo %}Programas{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Programas") }}
+
+<section class="program-page">
+    <div class="container">
+        <div class="row gutter-y-30">
+            {% for programa in programas %}
+            <div class="col-lg-4 col-md-6">{{ tarjeta_programa(programa, loop.index0) }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{{ llamado_colaborar("¿Quieres acompañar a los niños en estos programas?") }}
+
+{% endblock %}

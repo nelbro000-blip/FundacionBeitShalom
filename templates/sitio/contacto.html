@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina, titulo_seccion with context %}
+
+{% block titulo %}Contacto{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Contacto") }}
+
+<section class="contact-one" id="formulario-contacto">
+    <div class="container">
+        {{ titulo_seccion("Contáctanos", "Escríbenos cuando quieras") }}
+
+        <div class="contacto-mensajes">
+            {% include "parciales/mensajes.html" %}
+            {% if errores.get('general') %}
+            <div class="alerta alerta-error" role="alert">{{ errores.general }}</div>
+            {% elif errores %}
+            <div class="alerta alerta-error" role="alert">Revisa los campos marcados para enviar tu mensaje.</div>
+            {% endif %}
+        </div>
+
+        <form class="contact-one__form form-one formulario-contacto" method="POST" action="{{ url_for('sitio.contacto') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-one__group">
+                <div class="form-one__control">
+                    <label class="sr-only" for="contactoNombre">Tu nombre</label>
+                    <input type="text" id="contactoNombre" name="nombre" placeholder="Tu nombre *" required
+                           minlength="{{ reglas.NOMBRE_MIN }}" maxlength="{{ reglas.NOMBRE_MAX }}" autocomplete="name"
+                           value="{{ mensaje.nombre }}" {% if errores.get('nombre') %}class="campo-invalido" aria-invalid="true"{% endif %}
+                           aria-describedby="errorContactoNombre">
+                    <p class="error" id="errorContactoNombre">{{ errores.get('nombre', '') }}</p>
+                </div>
+                <div class="form-one__control">
+                    <label class="sr-only" for="contactoCorreo">Correo electrónico</label>
+                    <input type="email" id="contactoCorreo" name="correo" placeholder="Correo electrónico *" required
+                           maxlength="{{ reglas.CORREO_MAX }}" autocomplete="email"
+                           value="{{ mensaje.correo }}" {% if errores.get('correo') %}class="campo-invalido" aria-invalid="true"{% endif %}
+                           aria-describedby="errorContactoCorreo">
+                    <p class="error" id="errorContactoCorreo">{{ errores.get('correo', '') }}</p>
+                </div>
+                <div class="form-one__control">
+                    <label class="sr-only" for="contactoTelefono">Teléfono (opcional)</label>
+                    <input type="text" id="contactoTelefono" name="telefono" placeholder="Tu teléfono (opcional)"
+                           maxlength="{{ reglas.TELEFONO_MAX }}" inputmode="tel" autocomplete="tel"
+                           value="{{ mensaje.telefono }}" {% if errores.get('telefono') %}class="campo-invalido" aria-invalid="true"{% endif %}
+                           aria-describedby="errorContactoTelefono">
+                    <p class="error" id="errorContactoTelefono">{{ errores.get('telefono', '') }}</p>
+                </div>
+                <div class="form-one__control">
+                    <label class="sr-only" for="contactoAsunto">Asunto</label>
+                    <select id="contactoAsunto" name="asunto" required class="selector-sitio {{ 'campo-invalido' if errores.get('asunto') }}"
+                            aria-describedby="errorContactoAsunto">
+                        <option value="">Selecciona un asunto *</option>
+                        {% for clave, texto in reglas.ASUNTOS.items() %}
+                        <option value="{{ clave }}" {% if mensaje.asunto == clave %}selected{% endif %}>{{ texto }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="error" id="errorContactoAsunto">{{ errores.get('asunto', '') }}</p>
+                </div>
+                <div class="form-one__control form-one__control--full">
+                    <label class="sr-only" for="contactoMensaje">Mensaje</label>
+                    <textarea id="contactoMensaje" name="mensaje" placeholder="Escribe tu mensaje *" required
+                              minlength="{{ reglas.MENSAJE_MIN }}" maxlength="{{ reglas.MENSAJE_MAX }}"
+                              {% if errores.get('mensaje') %}class="campo-invalido" aria-invalid="true"{% endif %}
+                              aria-describedby="errorContactoMensaje">{{ mensaje.mensaje }}</textarea>
+                    <p class="error" id="errorContactoMensaje">{{ errores.get('mensaje', '') }}</p>
+                </div>
+                <div class="form-one__control form-one__control--full">
+                    <label class="privacidad-sitio">
+                        <input type="checkbox" name="privacidad" value="1" required {% if mensaje.acepta_privacidad %}checked{% endif %}>
+                        <span>Acepto que la fundación use mis datos para responder este mensaje, conforme a la
+                            <a href="{{ url_for('colaborador.privacidad') }}" target="_blank" rel="noopener">política de privacidad</a>.</span>
+                    </label>
+                    <p class="error">{{ errores.get('privacidad', '') }}</p>
+                </div>
+                <div class="form-one__control form-one__control--full text-center">
+                    <button type="submit" class="kidearn-btn kidearn-btn--xl"><span>Enviar mensaje</span></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="contact-info-one">
+    <div class="container">
+        <div class="contact-info-one__inner">
+            <div class="row">
+                <div class="col-md-12 col-lg-4">
+                    <div class="contact-info-one__item">
+                        <i class="icon-telephone contact-info-one__icon"></i>
+                        <p class="contact-info-one__text">¿Tienes alguna pregunta?</p>
+                        <h3 class="contact-info-one__title"><a href="tel:{{ fundacion.telefono_enlace }}">{{ fundacion.telefono }}</a></h3>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="contact-info-one__item" style="--accent-color: #2390FF;">
+                        <i class="icon-email contact-info-one__icon"></i>
+                        <p class="contact-info-one__text">Escríbenos</p>
+                        <h3 class="contact-info-one__title"><a href="mailto:{{ fundacion.correo }}">{{ fundacion.correo }}</a></h3>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="contact-info-one__item" style="--accent-color: #75C137;">
+                        <i class="icon-location-fill contact-info-one__icon"></i>
+                        <p class="contact-info-one__text">Visítanos</p>
+                        <h3 class="contact-info-one__title"><a href="#mapa">{{ fundacion.direccion }}</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-map" id="mapa">
+    <div class="container-fluid">
+        <div class="google-map google-map__contact">
+            <iframe title="Mapa: {{ fundacion.direccion }}" src="{{ fundacion.mapa }}" class="map__contact" loading="lazy" allowfullscreen></iframe>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

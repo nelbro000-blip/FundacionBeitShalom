@@ -1,0 +1,113 @@
+{# =====================================================================
+   Macros reutilizables del panel: insignias de estado y gráficos.
+   Los gráficos se dibujan con SVG en el servidor: no necesitan librerías
+   externas ni estilos en línea (compatibles con la política de seguridad).
+   ===================================================================== #}
+
+{# Insignia de estado: el color siempre va acompañado del texto #}
+{% macro estado_badge(estado) -%}
+<span class="estado estado-{{ estado | clase_estado }}"><span class="estado-punto" aria-hidden="true"></span>{{ estado }}</span>
+{%- endmacro %}
+
+
+{# Tabla equivalente a cada gráfico (accesibilidad) #}
+{% macro tabla_datos(titulo, datos, total=0, columna="Categoría") %}
+<details class="vista-tabla">
+    <summary>Ver como tabla</summary>
+    <table class="tabla tabla-compacta">
+        <caption class="solo-lectores">{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th scope="col">{{ columna }}</th>
+                <th scope="col" class="numero-celda">Solicitudes</th>
+                {% if total %}<th scope="col" class="numero-celda">% del total</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for etiqueta, valor in datos %}
+            <tr>
+                <th scope="row">{{ etiqueta }}</th>
+                <td class="numero-celda">{{ valor }}</td>
+                {% if total %}<td class="numero-celda">{{ valor | porcentaje(total) }}%</td>{% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</details>
+{% endmacro %}
+
+
+{# Barras horizontales ordenadas: una sola serie, un solo color, valor en la punta #}
+{% macro grafico_barras(id, titulo, datos, total, nota="", columna="Categoría", unidad="solicitudes") %}
+{% set valores = datos | map(attribute=1) | list %}
+{% set maximo = (valores | max) if valores else 0 %}
+<figure class="tarjeta grafico" aria-labelledby="titulo-{{ id }}">
+
+    <figcaption>
+        <h2 id="titulo-{{ id }}">{{ titulo }}</h2>
+        {% if nota %}<p class="nota-grafico">{{ nota }}</p>{% endif %}
+    </figcaption>
+
+    {% if total == 0 %}
+    <p class="vacio">Aún no hay solicitudes registradas.</p>
+    {% else %}
+    <ul class="barras">
+        {% for etiqueta, valor in datos %}
+        {% set ancho = ((valor / maximo * 85) | round(1)) if maximo else 0 %}
+        <li class="barra-fila"
+            tabindex="0"
+            data-etiqueta="{{ etiqueta }}"
+            data-detalle="{{ valor }} {{ unidad }} · {{ valor | porcentaje(total) }}% del total">
+            <span class="barra-etiqueta">{{ etiqueta }}</span>
+            <svg class="barra" height="20" aria-hidden="true" focusable="false">
+                {% if valor > 0 %}
+                <rect class="barra-relleno" x="0" y="2" width="{{ ancho }}%" height="16" rx="4"></rect>
+                {% if ancho >= 3 %}<rect class="barra-relleno" x="0" y="2" width="4" height="16"></rect>{% endif %}
+                {% endif %}
+                <text class="barra-valor" x="{{ ancho }}%" dx="{{ 8 if valor > 0 else 2 }}" y="15">{{ valor }}</text>
+            </svg>
+            <span class="solo-lectores">: {{ valor }} {{ unidad }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {{ tabla_datos(titulo, datos, total, columna) }}
+    {% endif %}
+
+</figure>
+{% endmacro %}
+
+
+{# Columnas por periodo (tendencia en el tiempo): valor sobre cada columna #}
+{% macro grafico_columnas(id, titulo, datos, total, nota="") %}
+{% set valores = datos | map(attribute=1) | list %}
+{% set maximo = (valores | max) if valores else 0 %}
+<figure class="tarjeta grafico" aria-labelledby="titulo-{{ id }}">
+
+    <figcaption>
+        <h2 id="titulo-{{ id }}">{{ titulo }}</h2>
+        {% if nota %}<p class="nota-grafico">{{ nota }}</p>{% endif %}
+    </figcaption>
+
+    <ul class="columnas">
+        {% for etiqueta, valor in datos %}
+        {% set alto = ((valor / maximo * 80) | round(1)) if maximo else 0 %}
+        <li class="columna"
+            tabindex="0"
+            data-etiqueta="{{ etiqueta }}"
+            data-detalle="{{ valor }} solicitudes registradas">
+            <svg class="columna-svg" height="150" aria-hidden="true" focusable="false">
+                {% if valor > 0 %}
+                <rect class="barra-relleno" x="50%" y="{{ 100 - alto }}%" width="24" height="{{ alto }}%" rx="4" transform="translate(-12 0)"></rect>
+                {% if alto >= 4 %}<rect class="barra-relleno" x="50%" y="100%" width="24" height="4" transform="translate(-12 -4)"></rect>{% endif %}
+                {% endif %}
+                <text class="barra-valor" x="50%" y="{{ 100 - alto }}%" dy="-7" text-anchor="middle">{{ valor }}</text>
+            </svg>
+            <span class="columna-etiqueta">{{ etiqueta }}</span>
+            <span class="solo-lectores">: {{ valor }} solicitudes</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {{ tabla_datos(titulo, datos, 0, "Mes") }}
+
+</figure>
+{% endmacro %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import estatico, encabezado_pagina, titulo_seccion, acordeon, tarjeta_programa with context %}
+
+{% block titulo %}{{ programa.titulo }}{% endblock %}
+{% block descripcion %}{{ programa.descripcion }}{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina(programa.titulo, [("Programas", url_for('sitio.programas'))]) }}
+
+<section class="programs-details">
+    <div class="container">
+        <div class="row gutter-y-60">
+            <div class="col-md-12 col-lg-8">
+                <div class="programs-details__image">
+                    <img src="{{ estatico(programa.imagen_detalle) }}" alt="{{ programa.titulo }}">
+                </div>
+                <h2 class="programs-details__title">Resumen del programa</h2>
+                <p class="programs-details__text">{{ programa.descripcion }}</p>
+                <p class="programs-details__text">{{ fundacion.quienes_somos }}</p>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <div class="programs-details__info" style="--accent-color: {{ programa.color }};">
+                    <h3 class="programs-details__info__title">{{ programa.titulo }}</h3>
+                    <p class="programs-details__info__text">{{ programa.resumen }}</p>
+                    <ul class="list-unstyled programs-details__info__list">
+                        <li>
+                            <div class="programs-details__info__list__name">Población:</div>
+                            <div class="programs-details__info__list__text">Niños y niñas</div>
+                        </li>
+                        <li>
+                            <div class="programs-details__info__list__name">Grupos:</div>
+                            <div class="programs-details__info__list__text">Reducidos</div>
+                        </li>
+                        <li>
+                            <div class="programs-details__info__list__name">Frecuencia:</div>
+                            <div class="programs-details__info__list__text">Semanal</div>
+                        </li>
+                        <li>
+                            <div class="programs-details__info__list__name">Aporte:</div>
+                            <div class="programs-details__info__list__text">Voluntario</div>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('sitio.contacto', asunto='inscripcion') }}#formulario-contacto" class="kidearn-btn kidearn-btn--xl">
+                                <span>Inscribir a mi hijo o hija</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('colaborador.registrar') }}" class="kidearn-btn kidearn-btn--xl boton-secundario-sitio">
+                                <span>Quiero colaborar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="event-faqs background-gray">
+    <div class="container">
+        {{ titulo_seccion("Preguntas", "Preguntas y respuestas", "text-left") }}
+        <div class="row gutter-y-60">
+            <div class="col-md-12 col-xl-5">
+                <div class="event-faqs__image">
+                    <img src="{{ estatico('assets/images/resources/event-faq-1-1.jpg') }}" alt="Niños y niñas de la fundación">
+                </div>
+            </div>
+            <div class="col-md-12 col-xl-7">
+                {{ acordeon(preguntas, "event-faqs__accordion", colores=True) }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="program-page otros-programas">
+    <div class="container">
+        {{ titulo_seccion("Otros programas", "Conoce más formas en que acompañamos a la niñez") }}
+        <div class="row gutter-y-30">
+            {% for otro in otros[:3] %}
+            <div class="col-lg-4 col-md-6">{{ tarjeta_programa(otro, loop.index0) }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

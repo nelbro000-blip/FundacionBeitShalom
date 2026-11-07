@@ -1,0 +1,10 @@
+{% with mensajes = get_flashed_messages(with_categories=true) %}
+{% if mensajes %}
+<div class="mensajes">
+    {% for categoria, mensaje in mensajes %}
+    {% set tipo = categoria if categoria in ("exito", "error", "aviso") else "aviso" %}
+    <div class="alerta alerta-{{ tipo }}" role="{{ 'alert' if tipo == 'error' else 'status' }}">{{ mensaje }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}

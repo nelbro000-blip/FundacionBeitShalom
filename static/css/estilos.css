@@ -1,0 +1,742 @@
+/* =====================================================================
+   estilos.css — Estilos propios del sitio de Fundación Beit Shalom
+   Se carga después de la plantilla Kidearn (kidearn.css) y contiene:
+     1. Utilidades de accesibilidad
+     2. Formulario de registro de colaboradores (sección 9 de la guía)
+     3. Formulario de contacto, confirmación, privacidad y errores
+     4. Ajustes de las páginas del sitio
+   Las reglas del formulario están dentro de .registro-colaborador para no
+   chocar con los estilos de Bootstrap y de la plantilla.
+   ===================================================================== */
+
+:root {
+    /* Colores institucionales (los mismos de la plantilla Kidearn) */
+    --color-naranja: #F25334;
+    --color-naranja-oscuro: #c63d22;
+    --color-verde-azulado: #26A6A1;
+    --color-verde-azulado-oscuro: #1b7f7b;
+    --color-amarillo: #FFAA23;
+    --color-verde: #75C137;
+    --color-azul: #2390FF;
+    --color-oscuro: #0B2038;
+    --color-texto: #4f5b68;
+    --color-texto-suave: #6b7480;
+    --color-fondo-suave: #FAF5F2;
+    --color-borde: #F1E2D8;
+    --color-borde-campo: #DCCBBE;
+    --color-error: #c0392b;
+    --color-error-fondo: #fdf3f2;
+    --color-exito: #1e7e4f;
+    --color-exito-fondo: #eef8f2;
+}
+
+/* ---------------------------------------------------------------------
+   1. Accesibilidad
+   --------------------------------------------------------------------- */
+
+.sr-only,
+.solo-lectores {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.saltar-contenido {
+    position: fixed;
+    left: 16px;
+    top: -80px;
+    z-index: 10000;
+    padding: 10px 18px;
+    border-radius: 10px;
+    background: var(--color-oscuro);
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.saltar-contenido:focus {
+    top: 16px;
+    color: #ffffff;
+}
+
+:focus-visible {
+    outline: 3px solid var(--color-verde-azulado);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------
+   2. Formulario de registro de colaboradores
+   --------------------------------------------------------------------- */
+
+.registro-colaborador {
+    padding: 100px 0 110px;
+    background: var(--color-fondo-suave);
+}
+
+.registro-colaborador .container {
+    max-width: 900px;
+}
+
+.registro-colaborador--estrecho .container {
+    max-width: 800px;
+}
+
+/* Encabezado */
+
+.registro-colaborador .encabezado {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.registro-colaborador .encabezado .sec-title__title {
+    font-size: 36px;
+}
+
+.registro-colaborador .encabezado p {
+    max-width: 600px;
+    margin: 12px auto 0;
+    color: var(--color-texto);
+    font-size: 17px;
+}
+
+/* Secciones del formulario (tarjetas numeradas) */
+
+.registro-colaborador .seccion {
+    --acento: var(--color-naranja);
+    margin-bottom: 28px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid var(--color-borde);
+    border-top: 5px solid var(--acento);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(11, 32, 56, 0.06);
+}
+
+.registro-colaborador .seccion--naranja { --acento: var(--color-naranja); }
+.registro-colaborador .seccion--verde-azulado { --acento: var(--color-verde-azulado); }
+.registro-colaborador .seccion--amarillo { --acento: var(--color-amarillo); }
+.registro-colaborador .seccion--verde { --acento: var(--color-verde); }
+
+.registro-colaborador .seccion h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 8px;
+    color: var(--color-oscuro);
+    font-family: var(--kidearn-heading-font, "Fredoka", sans-serif);
+    font-size: 22px;
+}
+
+.registro-colaborador .numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--acento);
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.registro-colaborador .descripcion {
+    margin: 0 0 16px;
+    color: var(--color-texto-suave);
+}
+
+/* Campos */
+
+.registro-colaborador .fila-campos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 22px;
+}
+
+.registro-colaborador label {
+    display: block;
+    margin: 18px 0 8px;
+    color: var(--color-oscuro);
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.registro-colaborador .obligatorio {
+    color: var(--color-error);
+}
+
+.opcional {
+    color: var(--color-texto-suave);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.registro-colaborador input:not([type="checkbox"]),
+.registro-colaborador select,
+.registro-colaborador textarea,
+.formulario-contacto input:not([type="checkbox"]),
+.formulario-contacto select,
+.formulario-contacto textarea,
+.form-login input {
+    display: block;
+    width: 100%;
+    min-height: 56px;
+    padding: 14px 20px;
+    border: 1px solid var(--color-borde-campo);
+    border-radius: 14px;
+    background: var(--color-fondo-suave);
+    color: var(--color-oscuro);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.registro-colaborador textarea,
+.formulario-contacto textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.registro-colaborador select,
+.formulario-contacto select {
+    appearance: none;
+    padding-right: 48px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%230B2038' stroke-width='2' d='M3 6l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 14px;
+    cursor: pointer;
+}
+
+.registro-colaborador input::placeholder,
+.registro-colaborador textarea::placeholder,
+.formulario-contacto input::placeholder,
+.formulario-contacto textarea::placeholder {
+    color: #8c949e;
+}
+
+.registro-colaborador input:focus,
+.registro-colaborador select:focus,
+.registro-colaborador textarea:focus,
+.formulario-contacto input:focus,
+.formulario-contacto select:focus,
+.formulario-contacto textarea:focus,
+.form-login input:focus {
+    outline: none;
+    border-color: var(--color-verde-azulado);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(38, 166, 161, 0.16);
+}
+
+.registro-colaborador .ayuda {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: var(--color-texto-suave);
+}
+
+.registro-colaborador .contador {
+    margin: 6px 0 0;
+    font-size: 13px;
+    text-align: right;
+    color: var(--color-texto-suave);
+}
+
+.registro-colaborador .contador.cerca-del-limite {
+    color: var(--color-naranja-oscuro);
+    font-weight: 700;
+}
+
+/* Estados visuales de validación */
+
+input.campo-invalido,
+select.campo-invalido,
+textarea.campo-invalido {
+    border-color: var(--color-error) !important;
+    background-color: var(--color-error-fondo) !important;
+}
+
+input.campo-invalido:focus,
+select.campo-invalido:focus,
+textarea.campo-invalido:focus {
+    box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.15) !important;
+}
+
+input.campo-valido,
+select.campo-valido,
+textarea.campo-valido {
+    border-color: var(--color-exito) !important;
+}
+
+.error {
+    margin: 6px 0 0;
+    color: var(--color-error);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.error:empty {
+    display: none;
+}
+
+.registro-colaborador .error-general {
+    margin: 0 0 14px;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Áreas de colaboración: tarjetas seleccionables (CSS Grid) */
+
+.registro-colaborador .grupo-opciones {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+}
+
+.registro-colaborador .opciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    border-radius: 16px;
+}
+
+.registro-colaborador .opcion {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 14px 16px;
+    border: 1px solid var(--color-borde-campo);
+    border-radius: 14px;
+    background: #ffffff;
+    color: var(--color-texto);
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+}
+
+.registro-colaborador .opcion:hover {
+    border-color: var(--color-verde-azulado);
+    transform: translateY(-1px);
+}
+
+.registro-colaborador .opcion:has(input:checked) {
+    border-color: var(--color-verde-azulado);
+    background: rgba(38, 166, 161, 0.1);
+    color: var(--color-oscuro);
+    font-weight: 700;
+}
+
+.registro-colaborador .grupo-invalido {
+    outline: 2px solid var(--color-error);
+    outline-offset: 4px;
+}
+
+.registro-colaborador input[type="checkbox"],
+.formulario-contacto input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    accent-color: var(--color-verde-azulado);
+    cursor: pointer;
+}
+
+.registro-colaborador .privacidad,
+.privacidad-sitio {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 0;
+    font-weight: 500;
+    color: var(--color-texto);
+    cursor: pointer;
+}
+
+.registro-colaborador .privacidad input,
+.privacidad-sitio input {
+    margin-top: 3px;
+}
+
+.registro-colaborador .privacidad a,
+.privacidad-sitio a {
+    color: var(--color-naranja-oscuro);
+    text-decoration: underline;
+}
+
+/* Botón de envío (mismo estilo que los botones de la plantilla) */
+
+.btn-enviar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 18px 30px;
+    border: none;
+    border-radius: 16px;
+    background: var(--color-naranja);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(242, 83, 52, 0.28);
+    transition: background-color 0.3s, transform 0.15s;
+}
+
+.btn-enviar:hover {
+    background: var(--color-oscuro);
+}
+
+.btn-enviar:active {
+    transform: translateY(1px);
+}
+
+.btn-enviar:disabled {
+    cursor: wait;
+    opacity: 0.85;
+}
+
+.btn-enviar.enviando::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Notas y alertas */
+
+.nota {
+    margin: 26px 0 0;
+    padding: 16px 20px;
+    border-left: 5px solid var(--color-amarillo);
+    border-radius: 14px;
+    background: #fff7ea;
+    color: #5c4a28;
+    font-size: 15px;
+}
+
+.alerta {
+    margin-bottom: 24px;
+    padding: 14px 20px;
+    border-left: 5px solid;
+    border-radius: 14px;
+    font-weight: 500;
+}
+
+.alerta p {
+    margin: 0;
+}
+
+.alerta ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+}
+
+.alerta-error {
+    background: var(--color-error-fondo);
+    border-color: var(--color-error);
+    color: #7d241b;
+}
+
+.alerta-error a {
+    color: #7d241b;
+    text-decoration: underline;
+}
+
+.alerta-exito {
+    background: var(--color-exito-fondo);
+    border-color: var(--color-exito);
+    color: #14573a;
+}
+
+.alerta-aviso {
+    background: #fff7ea;
+    border-color: var(--color-amarillo);
+    color: #6b5224;
+}
+
+/* ---------------------------------------------------------------------
+   3. Contacto, confirmación, privacidad, errores e inicio de sesión
+   --------------------------------------------------------------------- */
+
+.contacto-mensajes {
+    max-width: 770px;
+    margin: 0 auto;
+}
+
+.formulario-contacto .form-one__control .error {
+    padding-left: 6px;
+}
+
+.confirmacion {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.icono-exito {
+    width: 84px;
+    height: 84px;
+}
+
+.icono-exito circle {
+    fill: var(--color-exito-fondo);
+    stroke: var(--color-exito);
+    stroke-width: 2.5;
+}
+
+.icono-exito path {
+    fill: none;
+    stroke: var(--color-exito);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.confirmacion h2 {
+    margin: 12px 0 4px;
+    color: var(--color-oscuro);
+    font-size: 34px;
+}
+
+.confirmacion .destacado {
+    margin: 0;
+    font-size: 18px;
+    color: var(--color-texto);
+}
+
+.registro-colaborador .pasos {
+    margin: 0;
+    padding-left: 22px;
+    color: var(--color-texto);
+}
+
+.registro-colaborador .pasos li {
+    margin-bottom: 10px;
+}
+
+.acciones-centradas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin: 30px 0 0;
+}
+
+.texto-legal .seccion {
+    padding: 26px 30px;
+}
+
+.texto-legal .seccion h3 {
+    font-size: 19px;
+}
+
+.texto-legal p,
+.texto-legal ul {
+    margin: 0 0 8px;
+    color: var(--color-texto);
+}
+
+.texto-legal ul {
+    padding-left: 22px;
+}
+
+.pagina-error {
+    text-align: center;
+}
+
+.codigo-error {
+    display: inline-block;
+    margin: 0 0 10px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    background: rgba(242, 83, 52, 0.12);
+    color: var(--color-naranja-oscuro);
+    font-weight: 700;
+}
+
+.login-info-panel {
+    height: 100%;
+    padding: 34px;
+    border-radius: 24px;
+    background: rgba(38, 166, 161, 0.08);
+    color: var(--color-texto);
+}
+
+.login-info-panel ul {
+    margin: 0 0 22px;
+}
+
+.login-info-panel li {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.login-info-panel .fa {
+    margin-top: 4px;
+    color: var(--color-verde-azulado);
+}
+
+.form-login .login-page__form-input-box {
+    margin-bottom: 18px;
+}
+
+/* ---------------------------------------------------------------------
+   4. Ajustes de las páginas del sitio
+   --------------------------------------------------------------------- */
+
+/* Menú principal en una sola línea; el botón "Quiero colaborar" tampoco se parte */
+.main-menu .main-menu__list > li > a,
+.main-header__btn {
+    white-space: nowrap;
+}
+
+/* En pantallas medianas se oculta el teléfono del encabezado para dar espacio
+   al menú (sigue visible en la barra superior y en el pie de página) */
+@media (min-width: 1200px) and (max-width: 1499px) {
+    .main-header__call {
+        display: none !important;
+    }
+}
+
+/* Botón secundario con el estilo de la plantilla */
+.kidearn-btn.boton-secundario-sitio {
+    background-color: var(--color-verde-azulado);
+}
+
+.programs-details__info__list .kidearn-btn {
+    width: 100%;
+}
+
+.seccion-boton {
+    margin-top: 50px;
+}
+
+.mail-one__texto {
+    margin: -20px 0 30px;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.pricing-one__card__month {
+    margin: 0;
+}
+
+.pricing-one__boton {
+    width: 100%;
+    margin-top: 26px;
+}
+
+.nota-apoyo {
+    max-width: 720px;
+    margin: 40px auto 0;
+    text-align: center;
+    color: var(--color-texto-suave);
+}
+
+.events-details__text--destacado {
+    color: var(--color-oscuro);
+    font-weight: 700;
+}
+
+.events-details__categories span,
+.event-card-two__cats span,
+.blog-card__category {
+    display: inline-block;
+}
+
+.events-details__map iframe {
+    width: 100%;
+    height: 260px;
+    border: 0;
+    border-radius: 16px;
+}
+
+.noticia-autor {
+    margin-top: 20px;
+    color: var(--color-texto-suave);
+}
+
+.etiqueta-noticia {
+    display: inline-block;
+    margin: 0 6px 6px 0;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: var(--color-fondo-suave);
+    color: var(--color-oscuro);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.otros-programas,
+.otras-noticias {
+    padding-top: 40px;
+}
+
+.otras-noticias {
+    padding-bottom: 120px;
+}
+
+.pie-separador {
+    margin: 0 6px;
+}
+
+.main-footer__copyright a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------
+   Adaptación a celulares
+   --------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+
+    .registro-colaborador {
+        padding: 60px 0 70px;
+    }
+
+    .registro-colaborador .seccion {
+        padding: 22px 18px;
+        border-radius: 20px;
+    }
+
+    .registro-colaborador .fila-campos,
+    .registro-colaborador .opciones {
+        grid-template-columns: 1fr;
+    }
+
+    .registro-colaborador .encabezado .sec-title__title {
+        font-size: 28px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+
+}

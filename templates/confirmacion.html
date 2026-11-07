@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% from "sitio/macros.html" import encabezado_pagina with context %}
+
+{% block titulo %}Solicitud recibida{% endblock %}
+
+{% block content %}
+
+{{ encabezado_pagina("Solicitud recibida", [("Quiero colaborar", url_for('colaborador.registrar'))]) }}
+
+<section class="registro-colaborador registro-colaborador--estrecho">
+    <div class="container">
+
+        <div class="confirmacion" aria-labelledby="tituloGracias">
+            <svg class="icono-exito" viewBox="0 0 48 48" aria-hidden="true">
+                <circle cx="24" cy="24" r="22"></circle>
+                <path d="M14 24.5 L21 31.5 L34 17.5"></path>
+            </svg>
+            <h2 id="tituloGracias">¡Gracias, {{ datos.nombre }}!</h2>
+            <p class="destacado">Tu solicitud fue recibida correctamente.</p>
+        </div>
+
+        <section class="seccion seccion--verde-azulado">
+            <h3>¿Qué sigue?</h3>
+            <ol class="pasos">
+                <li>
+                    <strong>Revisión.</strong>
+                    Nuestro equipo evaluará tu solicitud y las áreas que seleccionaste.
+                </li>
+                <li>
+                    <strong>Contacto.</strong>
+                    Te escribiremos a <strong>{{ datos.correo }}</strong> para informarte el resultado.
+                </li>
+                <li>
+                    <strong>Bienvenida.</strong>
+                    Si tu perfil se ajusta a las necesidades actuales, coordinaremos contigo los siguientes pasos.
+                </li>
+            </ol>
+        </section>
+
+        <p class="nota">
+            La inscripción como colaborador no constituye una autorización para trabajar
+            directamente con niños. Cualquier participación en actividades con menores
+            requiere un proceso de verificación independiente.
+        </p>
+
+        <p class="acciones-centradas">
+            <a class="kidearn-btn" href="{{ url_for('sitio.inicio') }}"><span>Volver al inicio</span></a>
+            <a class="kidearn-btn boton-secundario-sitio" href="{{ url_for('sitio.programas') }}"><span>Conoce nuestros programas</span></a>
+        </p>
+
+    </div>
+</section>
+
+{% endblock %}
